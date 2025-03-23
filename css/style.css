@@ -1,3 +1,44 @@
+/* === ESTILO ESPECÍFICO DA PÁGINA INDEX === */
+
+.index-body {
+    background: url("../img/mapa_brasil_transparente.png") no-repeat center center;
+    background-size: contain;
+    background-color: #f0f8ff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: black;
+}
+
+.index-conteudo {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 30px 40px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.index-titulo {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.index-nivel-link {
+    display: block;
+    margin: 10px 0;
+    font-size: 20px;
+    color: black;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.index-nivel-link:hover {
+    text-decoration: underline;
+}
+
+/* Estilo de cada fase formato computador */
+
 body {
     margin: 0;
     background-color: #2E2E2E;
@@ -130,6 +171,17 @@ body {
 .dropzone:hover {
     background: rgba(255, 255, 255, 0.4);
 }
+#linha-df {
+    position: absolute;
+    top: 54.5%;
+    left: 63.9%;
+    width: 215px;
+    height: 2px;
+    background-color: white;
+    /*transform: rotate(20deg); /* ajuste a inclinação da linha */
+    z-index: 15;
+}
+
 
 /* === RESPONSIVIDADE A PARTIR DAQUI === */
 
@@ -220,4 +272,6 @@ body {
     #map-container {
         width: 95%;
         margin: 20px 10px 10px 0px;
+}
+
 }

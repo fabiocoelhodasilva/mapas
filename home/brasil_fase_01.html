@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Estados do Brasil - Drag and Drop</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    #parabens-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      z-index: 2000;
+      display: none;
+      color: #000;
+    }
+
+    #parabens-container h2 {
+      margin-bottom: 20px;
+    }
+
+    #jogar-novamente {
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #jogar-novamente:hover {
+      background-color: #104e8b;
+    }
+  </style>
+</head>
+<body>
+  <!-- Cabeçalho fixo -->
+  <div id="header">Estados do Brasil</div>
+
+  <!-- Barra fixa com os nomes dos estados -->
+  <div id="words-bar"></div>
+
+  <div id="main-container">
+    <div id="map-container">
+      <img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />
+    </div>
+  </div>
+
+  <!-- Tela de parabéns -->
+  <div id="parabens-container">
+    <h2>Parabéns, você acertou todas as alternativas deste nível!</h2>
+    <button id="jogar-novamente" onclick="reiniciarFase()">Jogar novamente</button>
+  </div>
+
+  <script>
+    const estados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia"];
+    const posicoes = {
+      "Acre": { top: "39%", left: "5%" },
+      "Alagoas": { top: "40%", left: "93%" },
+      "Amapá": { top: "10%", left: "49%" },
+      "Amazonas": { top: "25%", left: "18%" },
+      "Bahia": { top: "45%", left: "70%" }
+    };
+
+    const mapContainer = document.getElementById("map-container");
+    const wordsBar = document.getElementById("words-bar");
+
+    function criarElementos() {
+      wordsBar.innerHTML = "";
+      estados.forEach(estado => {
+        const wordBox = document.createElement("div");
+        wordBox.className = "word-box";
+        wordBox.draggable = true;
+        wordBox.ondragstart = drag;
+        wordBox.id = `word-${estado}`;
+        wordBox.innerText = estado;
+        wordsBar.appendChild(wordBox);
+
+        const div = document.createElement("div");
+        div.className = "dropzone";
+        div.dataset.estado = estado;
+        div.ondrop = drop;
+        div.ondragover = allowDrop;
+        div.style.top = posicoes[estado].top;
+        div.style.left = posicoes[estado].left;
+        mapContainer.appendChild(div);
+      });
+    }
+
+    function allowDrop(event) {
+      event.preventDefault();
+    }
+
+    function drag(event) {
+      event.dataTransfer.setData("text", event.target.id);
+    }
+
+    function drop(event) {
+      event.preventDefault();
+      let draggedId = event.dataTransfer.getData("text");
+      let draggedElement = document.getElementById(draggedId);
+      let dropzone = event.target;
+
+      let estadoCorreto = dropzone.dataset.estado;
+      let estadoArrastado = draggedElement.innerText;
+
+      if (estadoCorreto === estadoArrastado) {
+        dropzone.innerText = estadoArrastado;
+        dropzone.style.border = "2px solid green";
+        dropzone.style.color = "white";
+        dropzone.style.fontWeight = "bold";
+        draggedElement.remove();
+
+        verificarFinalizacao();
+      } else {
+        dropzone.style.border = "2px solid red";
+        setTimeout(() => {
+          dropzone.style.border = "2px solid #fcf8f8";
+        }, 1000);
+      }
+    }
+
+    function verificarFinalizacao() {
+      const restantes = document.querySelectorAll(".word-box");
+      if (restantes.length === 0) {
+        document.getElementById("parabens-container").style.display = "block";
+      }
+    }
+
+    function reiniciarFase() {
+      document.getElementById("parabens-container").style.display = "none";
+
+      document.querySelectorAll(".dropzone").forEach(zone => zone.remove());
+      criarElementos();
+    }
+
+    // Inicializar
+    criarElementos();
+  </script>
+</body>
+</html>

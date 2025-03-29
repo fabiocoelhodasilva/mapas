@@ -186,7 +186,7 @@ body {
         margin: 1px;
     }
     #map-container {
-        width: 110%;
+        width: 120%;
         margin: 140px 0 20px 0;
         display: flex;
         justify-content: flex-start;
@@ -194,8 +194,8 @@ body {
     }
    
     .dropzone {
-        width: 40px;
-        height: 9px;
+        width: 50px;
+        height: 11px;
         font-size: 10px;
     }
 }
@@ -226,7 +226,7 @@ body {
         align-items: center;
     }
     #map-container {
-        width: 75%;
+        width: 100%;
         margin: 20px 0 30px 2px;
         display: flex;
         justify-content: flex-start;
@@ -260,7 +260,7 @@ body {
         align-items: center;
     }
     #map-container {
-        width: 95%;
+        width: 100%;
         margin: 20px auto;
     }
 }

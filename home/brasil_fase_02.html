@@ -38,7 +38,6 @@
     #jogar-novamente:hover {
       background-color: #104e8b;
     }
-<<<<<<< HEAD
 
     .linha-conexao {
       position: absolute;
@@ -61,32 +60,13 @@
 </head>
 <body>
   <div id="header">Estados do Brasil</div>
-
-=======
-  </style>
-</head>
-<body>
-  <!-- Cabeçalho fixo -->
-  <div id="header">Estados do Brasil</div>
-
-  <!-- Barra fixa com os nomes dos estados -->
->>>>>>> 1fe4088c9d7ec89a52b322ec3498eb1859294bd4
   <div id="words-bar"></div>
-
   <div id="main-container">
     <div id="map-container">
       <img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />
-<<<<<<< HEAD
     </div>
   </div>
 
-=======
-      <div id="linha-df"></div>
-    </div>
-  </div>
-
-  <!-- Tela de parabéns -->
->>>>>>> 1fe4088c9d7ec89a52b322ec3498eb1859294bd4
   <div id="parabens-container">
     <h2>Parabéns, você acertou todas as alternativas deste nível!</h2>
     <button id="jogar-novamente" onclick="reiniciarFase()">Jogar novamente</button>
@@ -105,14 +85,8 @@
       "Amazonas": { top: "25%", left: "18%" },
       "Bahia": { top: "45%", left: "70%" },
       "Ceará": { top: "22%", left: "84%" },
-<<<<<<< HEAD
       "Distrito Federal": { top: "53.5%", left: "85.5%" },
       "Espírito Santo": { top: "63%", left: "79%" },
-=======
-      "Distrito Federal": { top: "53%", left: "85.5%" },
-      "Espírito Santo": { top: "63%", left: "79%" },
-      
->>>>>>> 1fe4088c9d7ec89a52b322ec3498eb1859294bd4
     };
 
     const mapContainer = document.getElementById("map-container");
@@ -120,11 +94,8 @@
 
     function criarElementos() {
       wordsBar.innerHTML = "";
-<<<<<<< HEAD
       mapContainer.innerHTML = '<img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />';
 
-=======
->>>>>>> 1fe4088c9d7ec89a52b322ec3498eb1859294bd4
       estados.forEach(estado => {
         const wordBox = document.createElement("div");
         wordBox.className = "word-box";
@@ -134,7 +105,6 @@
         wordBox.innerText = estado;
         wordsBar.appendChild(wordBox);
 
-<<<<<<< HEAD
         const dropzone = document.createElement("div");
         dropzone.className = "dropzone";
         dropzone.dataset.estado = estado;
@@ -175,17 +145,6 @@
       linha.style.transform = `rotate(${angulo}deg)`;
 
       document.body.appendChild(linha);
-=======
-        const div = document.createElement("div");
-        div.className = "dropzone";
-        div.dataset.estado = estado;
-        div.ondrop = drop;
-        div.ondragover = allowDrop;
-        div.style.top = posicoes[estado].top;
-        div.style.left = posicoes[estado].left;
-        mapContainer.appendChild(div);
-      });
->>>>>>> 1fe4088c9d7ec89a52b322ec3498eb1859294bd4
     }
 
     function allowDrop(event) {
@@ -198,21 +157,12 @@
 
     function drop(event) {
       event.preventDefault();
-<<<<<<< HEAD
       const draggedId = event.dataTransfer.getData("text");
       const draggedElement = document.getElementById(draggedId);
       const dropzone = event.target;
 
       const estadoCorreto = dropzone.dataset.estado;
       const estadoArrastado = draggedElement.innerText;
-=======
-      let draggedId = event.dataTransfer.getData("text");
-      let draggedElement = document.getElementById(draggedId);
-      let dropzone = event.target;
-
-      let estadoCorreto = dropzone.dataset.estado;
-      let estadoArrastado = draggedElement.innerText;
->>>>>>> 1fe4088c9d7ec89a52b322ec3498eb1859294bd4
 
       if (estadoCorreto === estadoArrastado) {
         dropzone.innerText = estadoArrastado;
@@ -220,10 +170,6 @@
         dropzone.style.color = "white";
         dropzone.style.fontWeight = "bold";
         draggedElement.remove();
-<<<<<<< HEAD
-=======
-
->>>>>>> 1fe4088c9d7ec89a52b322ec3498eb1859294bd4
         verificarFinalizacao();
       } else {
         dropzone.style.border = "2px solid red";
@@ -242,7 +188,6 @@
 
     function reiniciarFase() {
       document.getElementById("parabens-container").style.display = "none";
-<<<<<<< HEAD
       document.querySelectorAll(".linha-conexao").forEach(linha => linha.remove());
       criarElementos();
       setTimeout(() => {
@@ -257,14 +202,6 @@
         desenharLinhaEntre("ponto-df", "dropzone-Distrito-Federal");
       }, 100);
     });
-=======
-      document.querySelectorAll(".dropzone").forEach(zone => zone.remove());
-      criarElementos();
-    }
-
-    // Inicializar
-    criarElementos();
->>>>>>> 1fe4088c9d7ec89a52b322ec3498eb1859294bd4
   </script>
 </body>
 </html>

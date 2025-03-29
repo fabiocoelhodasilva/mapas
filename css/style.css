@@ -170,7 +170,7 @@ body {
 
 @media screen and (max-width: 480px) {
     #header {
-        font-size: 18px;
+        font-size: 20px;
     }
     #words-bar {
         width: 100%;
@@ -181,21 +181,18 @@ body {
         padding-left: 10px;
     }
     .word-box {
-        font-size: 10px;
+        font-size: 12px;
         padding: 3px;
         margin: 1px;
     }
     #map-container {
-        width: 75%;
+        width: 85%;
         margin: 140px 0 20px 0;
         display: flex;
         justify-content: flex-start;
         padding-left: 1px;
     }
-    #map-container img {
-        width: 100%;
-        height: auto;
-    }
+   
     .dropzone {
         width: 30px;
         height: 9px;

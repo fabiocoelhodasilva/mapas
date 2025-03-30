@@ -178,7 +178,7 @@ body {
     }
     
     #map-container {
-        width: 120%;
+        width: 95%;
         margin: 180px 0 20px -5px;
         display: flex;
         justify-content: flex-start;

@@ -157,15 +157,6 @@ body {
     background: rgba(255, 255, 255, 0.4);
 }
 
-.ponto-df {
-    width: 20px;
-    height: 20px;
-    background-color: red;
-    border: 3px solid yellow;
-    border-radius: 50%;
-    pointer-events: none;
-}
-
 /* === RESPONSIVIDADE A PARTIR DAQUI === */
 
 @media screen and (max-width: 480px) {

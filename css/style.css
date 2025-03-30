@@ -185,12 +185,13 @@ body {
         padding: 3px;
         margin: 1px;
     }
+    
     #map-container {
         width: 120%;
-        margin: 140px 0 20px 0;
+        margin: 140px 0 20px -5px;
         display: flex;
         justify-content: flex-start;
-        padding-left: 1px;
+        /*padding-left: 1px;*/
     }
    
     .dropzone {

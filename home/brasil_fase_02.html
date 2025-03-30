@@ -38,24 +38,6 @@
     #jogar-novamente:hover {
       background-color: #104e8b;
     }
-
-    .linha-conexao {
-      position: absolute;
-      height: 2px;
-      background-color: white;
-      z-index: 10;
-      transform-origin: 0 0;
-    }
-
-    #ponto-df {
-      position: absolute;
-      width: 12px;
-      height: 12px;
-      background-color: transparent;
-      border: none;
-      border-radius: 50%;
-      z-index: 999;
-    }
   </style>
 </head>
 <body>
@@ -85,7 +67,7 @@
       "Amazonas": { top: "25%", left: "18%" },
       "Bahia": { top: "45%", left: "70%" },
       "Ceará": { top: "22%", left: "84%" },
-      "Distrito Federal": { top: "53.5%", left: "85.5%" },
+      "Distrito Federal": { top: "53.5%", left: "64.7%" },
       "Espírito Santo": { top: "63%", left: "79%" },
     };
 
@@ -115,36 +97,6 @@
         dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
         mapContainer.appendChild(dropzone);
       });
-
-      const pontoDF = document.createElement("div");
-      pontoDF.id = "ponto-df";
-      pontoDF.style.top = "54%";
-      pontoDF.style.left = "63%";
-      mapContainer.appendChild(pontoDF);
-    }
-
-    function desenharLinhaEntre(idOrigem, idDestino) {
-      const origem = document.getElementById(idOrigem);
-      const destino = document.getElementById(idDestino);
-      const rectOrigem = origem.getBoundingClientRect();
-      const rectDestino = destino.getBoundingClientRect();
-
-      const x1 = rectOrigem.left + rectOrigem.width / 2;
-      const y1 = rectOrigem.top + rectOrigem.height / 2;
-      const x2 = rectDestino.left;
-      const y2 = rectDestino.top + rectDestino.height / 2;
-
-      const comprimento = Math.hypot(x2 - x1, y2 - y1);
-      const angulo = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
-
-      const linha = document.createElement("div");
-      linha.className = "linha-conexao";
-      linha.style.top = y1 + "px";
-      linha.style.left = x1 + "px";
-      linha.style.width = comprimento + "px";
-      linha.style.transform = `rotate(${angulo}deg)`;
-
-      document.body.appendChild(linha);
     }
 
     function allowDrop(event) {
@@ -188,20 +140,10 @@
 
     function reiniciarFase() {
       document.getElementById("parabens-container").style.display = "none";
-      document.querySelectorAll(".linha-conexao").forEach(linha => linha.remove());
       criarElementos();
-      setTimeout(() => {
-        desenharLinhaEntre("ponto-df", "dropzone-Distrito-Federal");
-      }, 100);
     }
 
     criarElementos();
-
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        desenharLinhaEntre("ponto-df", "dropzone-Distrito-Federal");
-      }, 100);
-    });
   </script>
 </body>
 </html>

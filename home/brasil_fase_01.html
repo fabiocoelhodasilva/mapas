@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Estados do Brasil - Drag and Drop</title>
+  <title>Estados do Brasil - Fase 01</title>
   <link rel="stylesheet" href="../css/style.css"/>
   <style>
     #parabens-container {
@@ -38,22 +38,29 @@
     #jogar-novamente:hover {
       background-color: #104e8b;
     }
+
+    .touch-dragging {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.9;
+      font-weight: bold;
+      background-color: yellow;
+      color: black;
+      padding: 5px 10px;
+      border-radius: 5px;
+      z-index: 9999;
+    }
   </style>
 </head>
 <body>
-  <!-- Cabeçalho fixo -->
   <div id="header">Estados do Brasil</div>
-
-  <!-- Barra fixa com os nomes dos estados -->
   <div id="words-bar"></div>
-
   <div id="main-container">
     <div id="map-container">
       <img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />
     </div>
   </div>
 
-  <!-- Tela de parabéns -->
   <div id="parabens-container">
     <h2>Parabéns, você acertou todas as alternativas deste nível!</h2>
     <button id="jogar-novamente" onclick="reiniciarFase()">Jogar novamente</button>
@@ -104,12 +111,12 @@
 
     function drop(event) {
       event.preventDefault();
-      let draggedId = event.dataTransfer.getData("text");
-      let draggedElement = document.getElementById(draggedId);
-      let dropzone = event.target;
+      const draggedId = event.dataTransfer.getData("text");
+      const draggedElement = document.getElementById(draggedId);
+      const dropzone = event.target;
 
-      let estadoCorreto = dropzone.dataset.estado;
-      let estadoArrastado = draggedElement.innerText;
+      const estadoCorreto = dropzone.dataset.estado;
+      const estadoArrastado = draggedElement.innerText;
 
       if (estadoCorreto === estadoArrastado) {
         dropzone.innerText = estadoArrastado;
@@ -117,7 +124,6 @@
         dropzone.style.color = "white";
         dropzone.style.fontWeight = "bold";
         draggedElement.remove();
-
         verificarFinalizacao();
       } else {
         dropzone.style.border = "2px solid red";
@@ -136,13 +142,78 @@
 
     function reiniciarFase() {
       document.getElementById("parabens-container").style.display = "none";
-
       document.querySelectorAll(".dropzone").forEach(zone => zone.remove());
       criarElementos();
     }
 
     // Inicializar
     criarElementos();
+
+    // Suporte para toque (mobile)
+    if ('ontouchstart' in window || navigator.maxTouchPoints) {
+      let tocando = false;
+      let elementoTocado = null;
+
+      wordsBar.addEventListener("touchstart", (e) => {
+        const touch = e.touches[0];
+        const target = e.target;
+
+        if (target.classList.contains("word-box")) {
+          e.preventDefault();
+          tocando = true;
+          elementoTocado = target.cloneNode(true);
+          elementoTocado.classList.add("touch-dragging");
+          elementoTocado.id = "dragging-temp";
+          elementoTocado.style.left = touch.pageX + "px";
+          elementoTocado.style.top = touch.pageY + "px";
+          document.body.appendChild(elementoTocado);
+        }
+      });
+
+      window.addEventListener("touchmove", (e) => {
+        if (tocando && elementoTocado) {
+          const touch = e.touches[0];
+          elementoTocado.style.left = (touch.pageX - 30) + "px";
+          elementoTocado.style.top = (touch.pageY - 20) + "px";
+        }
+      });
+
+      window.addEventListener("touchend", (e) => {
+        if (tocando && elementoTocado) {
+          const touch = e.changedTouches[0];
+          const x = touch.clientX;
+          const y = touch.clientY;
+          const dropzones = document.querySelectorAll(".dropzone");
+
+          for (let dz of dropzones) {
+            const rect = dz.getBoundingClientRect();
+            if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+              const estadoCorreto = dz.dataset.estado;
+              const estadoArrastado = elementoTocado.innerText;
+
+              if (estadoCorreto === estadoArrastado) {
+                dz.innerText = estadoArrastado;
+                dz.style.border = "2px solid green";
+                dz.style.color = "white";
+                dz.style.fontWeight = "bold";
+                document.getElementById(`word-${estadoArrastado}`)?.remove();
+                verificarFinalizacao();
+              } else {
+                dz.style.border = "2px solid red";
+                setTimeout(() => {
+                  dz.style.border = "2px solid #fcf8f8";
+                }, 1000);
+              }
+              break;
+            }
+          }
+
+          elementoTocado.remove();
+          elementoTocado = null;
+          tocando = false;
+        }
+      });
+    }
   </script>
 </body>
 </html>

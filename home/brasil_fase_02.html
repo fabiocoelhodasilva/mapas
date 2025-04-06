@@ -19,11 +19,9 @@
       display: none;
       color: #000;
     }
-
     #parabens-container h2 {
       margin-bottom: 20px;
     }
-
     #jogar-novamente {
       padding: 10px 20px;
       font-size: 16px;
@@ -34,11 +32,9 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
     #jogar-novamente:hover {
       background-color: #104e8b;
     }
-
     .touch-dragging {
       position: absolute;
       pointer-events: none;
@@ -80,7 +76,7 @@
       "Bahia": { top: "45%", left: "72%" },
       "Ceará": { top: "22%", left: "84%" },
       "Distrito Federal": { top: "53.5%", left: "64.7%" },
-      "Espírito Santo": { top: "63%", left: "79%" }
+      "Espírito Santo": { top: "63%", left: "79%" },
     };
 
     const mapContainer = document.getElementById("map-container");
@@ -143,9 +139,7 @@
     }
 
     function verificarFinalizacao() {
-      const restantes = Array.from(document.querySelectorAll(".word-box"))
-        .filter(el => el.id !== "dragging-temp");
-
+      const restantes = Array.from(document.querySelectorAll(".word-box")).filter(el => el.id !== "dragging-temp");
       if (restantes.length === 0) {
         document.getElementById("parabens-container").style.display = "block";
       }
@@ -158,7 +152,6 @@
 
     criarElementos();
 
-    // Suporte para toque com tolerância de 20px
     if ('ontouchstart' in window || navigator.maxTouchPoints) {
       let tocando = false;
       let elementoTocado = null;
@@ -233,3 +226,4 @@
   </script>
 </body>
 </html>
+

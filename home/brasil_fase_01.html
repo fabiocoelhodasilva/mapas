@@ -81,6 +81,7 @@
 
     function criarElementos() {
       wordsBar.innerHTML = "";
+      mapContainer.querySelectorAll(".dropzone").forEach(z => z.remove());
       estados.forEach(estado => {
         const wordBox = document.createElement("div");
         wordBox.className = "word-box";
@@ -142,11 +143,9 @@
 
     function reiniciarFase() {
       document.getElementById("parabens-container").style.display = "none";
-      document.querySelectorAll(".dropzone").forEach(zone => zone.remove());
       criarElementos();
     }
 
-    // Inicializar
     criarElementos();
 
     // Suporte para toque (mobile)

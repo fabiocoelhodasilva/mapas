@@ -177,7 +177,7 @@ body {
         margin: 1px;
     }
     #map-container {
-        transform: scale(1.1);
+        transform: scale(1);
         transform-origin: top left;
         margin: 230px 0 20px -10%;
     }

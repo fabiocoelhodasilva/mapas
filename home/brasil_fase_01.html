@@ -135,7 +135,9 @@
     }
 
     function verificarFinalizacao() {
-      const restantes = document.querySelectorAll(".word-box");
+      const restantes = Array.from(document.querySelectorAll(".word-box"))
+        .filter(el => el.id !== "dragging-temp");
+
       if (restantes.length === 0) {
         document.getElementById("parabens-container").style.display = "block";
       }
@@ -207,7 +209,7 @@
             }
           }
 
-          elementoTocado.remove();
+          document.getElementById("dragging-temp")?.remove();
           elementoTocado = null;
           tocando = false;
         }

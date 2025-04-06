@@ -214,7 +214,7 @@ body {
         align-items: center;
     }
     #map-container {
-        transform: scale(0.99);
+        transform: scale(0.94);
         transform-origin: top left;
         margin: 20px 0 30px -5%;
     }

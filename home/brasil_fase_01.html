@@ -150,7 +150,7 @@
 
     criarElementos();
 
-    // Suporte para toque (mobile)
+    // Suporte para toque (mobile) com área de tolerância
     if ('ontouchstart' in window || navigator.maxTouchPoints) {
       let tocando = false;
       let elementoTocado = null;
@@ -186,9 +186,16 @@
           const y = touch.clientY;
           const dropzones = document.querySelectorAll(".dropzone");
 
+          const tolerancia = 10; // ajuste da sensibilidade
+
           for (let dz of dropzones) {
             const rect = dz.getBoundingClientRect();
-            if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+            if (
+              x >= rect.left - tolerancia &&
+              x <= rect.right + tolerancia &&
+              y >= rect.top - tolerancia &&
+              y <= rect.bottom + tolerancia
+            ) {
               const estadoCorreto = dz.dataset.estado;
               const estadoArrastado = elementoTocado.innerText;
 

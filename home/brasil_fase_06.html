@@ -89,7 +89,7 @@
       "Pernambuco": { top: "36.1%", left: "83%" },
       "Piauí": { top: "34%", left: "70%" },
       "Rio de Janeiro": { top: "72%", left: "74%" },
-      "Rio Grande do Norte": { top: "28%", left: "91%" }
+      "Rio Grande do Norte": { top: "28.5%", left: "87%" }
     };
 
     const mapContainer = document.getElementById("map-container");
@@ -200,7 +200,7 @@
           const y = touch.clientY;
           const dropzones = document.querySelectorAll(".dropzone");
 
-          const tolerancia = 20;
+          const tolerancia = 15;
 
           for (let dz of dropzones) {
             const rect = dz.getBoundingClientRect();

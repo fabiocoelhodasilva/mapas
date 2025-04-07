@@ -19,11 +19,9 @@
       display: none;
       color: #000;
     }
-
     #parabens-container h2 {
       margin-bottom: 20px;
     }
-
     #jogar-novamente {
       padding: 10px 20px;
       font-size: 16px;
@@ -34,9 +32,19 @@
       border-radius: 8px;
       cursor: pointer;
     }
-
     #jogar-novamente:hover {
       background-color: #104e8b;
+    }
+    .touch-dragging {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.9;
+      font-weight: bold;
+      background-color: yellow;
+      color: black;
+      padding: 5px 10px;
+      border-radius: 5px;
+      z-index: 9999;
     }
   </style>
 </head>
@@ -144,7 +152,7 @@
     }
 
     function verificarFinalizacao() {
-      const restantes = document.querySelectorAll(".word-box");
+      const restantes = Array.from(document.querySelectorAll(".word-box")).filter(el => el.id !== "dragging-temp");
       if (restantes.length === 0) {
         document.getElementById("parabens-container").style.display = "block";
       }
@@ -156,6 +164,78 @@
     }
 
     criarElementos();
+
+    if ('ontouchstart' in window || navigator.maxTouchPoints) {
+      let tocando = false;
+      let elementoTocado = null;
+
+      wordsBar.addEventListener("touchstart", (e) => {
+        const touch = e.touches[0];
+        const target = e.target;
+
+        if (target.classList.contains("word-box")) {
+          e.preventDefault();
+          tocando = true;
+          elementoTocado = target.cloneNode(true);
+          elementoTocado.classList.add("touch-dragging");
+          elementoTocado.id = "dragging-temp";
+          elementoTocado.style.left = touch.pageX + "px";
+          elementoTocado.style.top = touch.pageY + "px";
+          document.body.appendChild(elementoTocado);
+        }
+      });
+
+      window.addEventListener("touchmove", (e) => {
+        if (tocando && elementoTocado) {
+          const touch = e.touches[0];
+          elementoTocado.style.left = (touch.pageX - 30) + "px";
+          elementoTocado.style.top = (touch.pageY - 20) + "px";
+        }
+      });
+
+      window.addEventListener("touchend", (e) => {
+        if (tocando && elementoTocado) {
+          const touch = e.changedTouches[0];
+          const x = touch.clientX;
+          const y = touch.clientY;
+          const dropzones = document.querySelectorAll(".dropzone");
+
+          const tolerancia = 20;
+
+          for (let dz of dropzones) {
+            const rect = dz.getBoundingClientRect();
+            if (
+              x >= rect.left - tolerancia &&
+              x <= rect.right + tolerancia &&
+              y >= rect.top - tolerancia &&
+              y <= rect.bottom + tolerancia
+            ) {
+              const estadoCorreto = dz.dataset.estado;
+              const estadoArrastado = elementoTocado.innerText;
+
+              if (estadoCorreto === estadoArrastado) {
+                dz.innerText = estadoArrastado;
+                dz.style.border = "2px solid green";
+                dz.style.color = "white";
+                dz.style.fontWeight = "bold";
+                document.getElementById(`word-${estadoArrastado}`)?.remove();
+                verificarFinalizacao();
+              } else {
+                dz.style.border = "2px solid red";
+                setTimeout(() => {
+                  dz.style.border = "2px solid #fcf8f8";
+                }, 1000);
+              }
+              break;
+            }
+          }
+
+          document.getElementById("dragging-temp")?.remove();
+          elementoTocado = null;
+          tocando = false;
+        }
+      });
+    }
   </script>
 </body>
 </html>

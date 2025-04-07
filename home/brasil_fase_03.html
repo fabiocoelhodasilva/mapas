@@ -88,7 +88,7 @@
 
     function criarElementos() {
       wordsBar.innerHTML = "";
-      mapContainer.querySelectorAll(".dropzone").forEach(z => z.remove());
+      mapContainer.innerHTML = '<img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />';
 
       estados.forEach(estado => {
         const wordBox = document.createElement("div");
@@ -99,14 +99,15 @@
         wordBox.innerText = estado;
         wordsBar.appendChild(wordBox);
 
-        const div = document.createElement("div");
-        div.className = "dropzone";
-        div.dataset.estado = estado;
-        div.ondrop = drop;
-        div.ondragover = allowDrop;
-        div.style.top = posicoes[estado].top;
-        div.style.left = posicoes[estado].left;
-        mapContainer.appendChild(div);
+        const dropzone = document.createElement("div");
+        dropzone.className = "dropzone";
+        dropzone.dataset.estado = estado;
+        dropzone.ondrop = drop;
+        dropzone.ondragover = allowDrop;
+        dropzone.style.top = posicoes[estado].top;
+        dropzone.style.left = posicoes[estado].left;
+        dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
+        mapContainer.appendChild(dropzone);
       });
     }
 
@@ -156,6 +157,7 @@
 
     criarElementos();
 
+    // Suporte para toque com tolerância
     if ('ontouchstart' in window || navigator.maxTouchPoints) {
       let tocando = false;
       let elementoTocado = null;

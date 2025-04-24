@@ -151,6 +151,7 @@ body {
     color: white !important;
     font-weight: bold;
     transition: all 0.3s ease;
+    white-space: nowrap; /* impede quebra de linha */
 }
 
 .dropzone:hover {
@@ -170,21 +171,25 @@ body {
         top: 35px;
         justify-content: flex-start;
         padding-left: 10px;
+        max-height: 100px;
+        overflow-y: auto;
     }
     .word-box {
-        font-size: 14px;
+        font-size: 10px;
         padding: 3px;
         margin: 1px;
     }
     #map-container {
-        transform: scale(0.93);
-        transform-origin: top left;
-        margin: 280px 0px 50px 2%;
+        transform: scale(1.2); /* ampliar imagem */
+        transform-origin: top center;
+        overflow: scroll;
+        margin: 200px 0px 50px 2%;
+        width: 120%;
     }
     .dropzone {
         width: 40px;
         height: 11px;
-        font-size: 10px;
+        font-size: 7px;
     }
 }
 
@@ -206,7 +211,7 @@ body {
         width: 50px;
         height: 18px;
         border: 1.5px solid white;
-        font-size: 9px;
+        font-size: 7px;
     }
     #main-container {
         padding-top: 140px;
@@ -231,7 +236,7 @@ body {
         padding: 3px;
     }
     .word-box {
-        font-size: 16px;
+        font-size: 14px;
         padding: 5px 10px;
     }
     .dropzone {
@@ -239,7 +244,7 @@ body {
         width: 70px;
         height: 18px;
         line-height: 27px;
-        font-size: 10px;
+        font-size: 7px;
     }
     #main-container {
         padding-top: 100px;

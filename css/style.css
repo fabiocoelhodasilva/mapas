@@ -180,11 +180,11 @@ body {
         margin: 1px;
     }
     #map-container {
-        transform: scale(1.2); /* ampliar imagem */
+        transform: scale(1.1); /* ampliar imagem */
         transform-origin: top center;
         overflow: scroll;
         margin: 200px 0px 50px 2%;
-        width: 120%;
+        width: 110%;
     }
     .dropzone {
         width: 40px;

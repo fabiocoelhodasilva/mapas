@@ -179,7 +179,7 @@ body {
     #map-container {
         transform: scale(0.93);
         transform-origin: top left;
-        margin: 260px 0px 50px 2%;
+        margin: 280px 0px 50px 2%;
     }
     .dropzone {
         width: 40px;

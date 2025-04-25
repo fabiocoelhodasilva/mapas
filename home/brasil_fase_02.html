@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Estados do Brasil - Fase 03</title>
+  <title>Estados do Brasil - Fase 02</title>
   <link rel="stylesheet" href="../css/style.css"/>
   <style>
     #parabens-container {
@@ -135,9 +135,9 @@
         dropzone.dataset.estado = estado;
         dropzone.ondrop = drop;
         dropzone.ondragover = allowDrop;
-        dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
         dropzone.style.top = posicoes[estado].top;
         dropzone.style.left = posicoes[estado].left;
+        dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
         dropzone.addEventListener("dragenter", dragEnter);
         dropzone.addEventListener("dragleave", dragLeave);
         mapContainer.appendChild(dropzone);
@@ -217,6 +217,23 @@
           const touch = e.touches[0];
           elementoTocado.style.left = (touch.pageX - 30) + "px";
           elementoTocado.style.top = (touch.pageY - 20) + "px";
+
+          document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("dragover"));
+          const x = touch.clientX;
+          const y = touch.clientY;
+          const tolerancia = 20;
+
+          for (let dz of document.querySelectorAll(".dropzone")) {
+            const rect = dz.getBoundingClientRect();
+            if (
+              x >= rect.left - tolerancia &&
+              x <= rect.right + tolerancia &&
+              y >= rect.top - tolerancia &&
+              y <= rect.bottom + tolerancia
+            ) {
+              dz.classList.add("dragover");
+            }
+          }
         }
       });
 
@@ -227,6 +244,8 @@
           const y = touch.clientY;
           const dropzones = document.querySelectorAll(".dropzone");
           const tolerancia = 20;
+
+          document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("dragover"));
 
           for (let dz of dropzones) {
             const rect = dz.getBoundingClientRect();

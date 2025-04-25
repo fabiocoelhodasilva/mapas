@@ -11,19 +11,26 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 30px;
-      border-radius: 12px;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px 40px;
+      border-radius: 16px;
       text-align: center;
       z-index: 2000;
       display: none;
       color: #000;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.4s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -55%); }
+      to   { opacity: 1; transform: translate(-50%, -50%); }
     }
     #parabens-container h2 {
       margin-bottom: 20px;
+      font-size: 22px;
     }
     #jogar-novamente {
-      padding: 10px 20px;
+      padding: 12px 24px;
       font-size: 16px;
       font-weight: bold;
       background-color: #1e90ff;
@@ -31,9 +38,25 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
     #jogar-novamente:hover {
       background-color: #104e8b;
+    }
+    #fechar-parabens {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 22px;
+      font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #444;
+      transition: color 0.2s ease;
+    }
+    #fechar-parabens:hover {
+      color: #ff3333;
     }
     .touch-dragging {
       position: absolute;
@@ -46,6 +69,15 @@
       border-radius: 5px;
       z-index: 9999;
     }
+    .dropzone.dragover {
+      animation: piscar 0.6s infinite;
+      transform: scale(1.3);
+    }
+    @keyframes piscar {
+      0% { background-color: rgba(255, 255, 0, 0.2); }
+      50% { background-color: rgba(255, 255, 0, 1); }
+      100% { background-color: rgba(255, 255, 0, 0.2); }
+    }
   </style>
 </head>
 <body>
@@ -56,12 +88,11 @@
       <img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />
     </div>
   </div>
-
   <div id="parabens-container">
+    <button id="fechar-parabens" onclick="fecharParabens()">&times;</button>
     <h2>Parabéns, você acertou todas as alternativas deste nível!</h2>
     <button id="jogar-novamente" onclick="reiniciarFase()">Jogar novamente</button>
   </div>
-
   <script>
     const estados = [
       "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia",
@@ -104,26 +135,26 @@
         dropzone.dataset.estado = estado;
         dropzone.ondrop = drop;
         dropzone.ondragover = allowDrop;
+        dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
         dropzone.style.top = posicoes[estado].top;
         dropzone.style.left = posicoes[estado].left;
-        dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
+        dropzone.addEventListener("dragenter", dragEnter);
+        dropzone.addEventListener("dragleave", dragLeave);
         mapContainer.appendChild(dropzone);
       });
     }
 
-    function allowDrop(event) {
-      event.preventDefault();
-    }
-
-    function drag(event) {
-      event.dataTransfer.setData("text", event.target.id);
-    }
+    function allowDrop(event) { event.preventDefault(); }
+    function dragEnter(event) { if (event.target.classList.contains("dropzone")) event.target.classList.add("dragover"); }
+    function dragLeave(event) { if (event.target.classList.contains("dropzone")) event.target.classList.remove("dragover"); }
+    function drag(event) { event.dataTransfer.setData("text", event.target.id); }
 
     function drop(event) {
       event.preventDefault();
       const draggedId = event.dataTransfer.getData("text");
       const draggedElement = document.getElementById(draggedId);
       const dropzone = event.target;
+      dropzone.classList.remove("dragover");
 
       const estadoCorreto = dropzone.dataset.estado;
       const estadoArrastado = draggedElement.innerText;
@@ -155,9 +186,12 @@
       criarElementos();
     }
 
+    function fecharParabens() {
+      document.getElementById("parabens-container").style.display = "none";
+    }
+
     criarElementos();
 
-    // Suporte para toque com tolerância
     if ('ontouchstart' in window || navigator.maxTouchPoints) {
       let tocando = false;
       let elementoTocado = null;
@@ -192,7 +226,6 @@
           const x = touch.clientX;
           const y = touch.clientY;
           const dropzones = document.querySelectorAll(".dropzone");
-
           const tolerancia = 20;
 
           for (let dz of dropzones) {

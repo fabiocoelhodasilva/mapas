@@ -69,6 +69,15 @@
       border-radius: 5px;
       z-index: 9999;
     }
+    .dropzone.dragover {
+      animation: piscar 0.6s infinite;
+      transform: scale(1.3);
+    }
+    @keyframes piscar {
+    0% { background-color: rgba(255, 255, 0, 0.2); }
+    50% { background-color: rgba(255, 255, 0, 1); }
+    100% { background-color: rgba(255, 255, 0, 0.2); }
+    }
   </style>
 </head>
 <body>
@@ -131,6 +140,7 @@
     function criarElementos() {
       wordsBar.innerHTML = "";
       mapContainer.innerHTML = '<img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />';
+
       estados.forEach(estado => {
         const wordBox = document.createElement("div");
         wordBox.className = "word-box";
@@ -148,12 +158,26 @@
         dropzone.style.top = posicoes[estado].top;
         dropzone.style.left = posicoes[estado].left;
         dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
+        dropzone.addEventListener("dragenter", dragEnter);
+        dropzone.addEventListener("dragleave", dragLeave);
         mapContainer.appendChild(dropzone);
       });
     }
 
     function allowDrop(event) {
       event.preventDefault();
+    }
+
+    function dragEnter(event) {
+      if (event.target.classList.contains("dropzone")) {
+        event.target.classList.add("dragover");
+      }
+    }
+
+    function dragLeave(event) {
+      if (event.target.classList.contains("dropzone")) {
+        event.target.classList.remove("dragover");
+      }
     }
 
     function drag(event) {
@@ -165,6 +189,7 @@
       const draggedId = event.dataTransfer.getData("text");
       const draggedElement = document.getElementById(draggedId);
       const dropzone = event.target;
+      dropzone.classList.remove("dragover");
 
       const estadoCorreto = dropzone.dataset.estado;
       const estadoArrastado = draggedElement.innerText;
@@ -185,7 +210,8 @@
     }
 
     function verificarFinalizacao() {
-      const restantes = Array.from(document.querySelectorAll(".word-box")).filter(el => el.id !== "dragging-temp");
+      const restantes = Array.from(document.querySelectorAll(".word-box"))
+        .filter(el => el.id !== "dragging-temp");
       if (restantes.length === 0) {
         document.getElementById("parabens-container").style.display = "block";
       }

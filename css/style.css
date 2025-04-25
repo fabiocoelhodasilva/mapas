@@ -191,11 +191,11 @@
       margin: 1px;
     }
     #map-container {
-      transform: scale(0.99);
+      transform: scale(1.4);
       transform-origin: top center;
       overflow: scroll;
       margin: 180px 0px 50px 2%;
-      width: 110%;
+      width: 130%;
     }
     .dropzone {
       width: 40px;

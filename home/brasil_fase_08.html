@@ -240,7 +240,7 @@
           document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("dragover"));
           const x = touch.clientX;
           const y = touch.clientY;
-          const tolerancia = 20;
+          const tolerancia = 10;
 
           for (let dz of document.querySelectorAll(".dropzone")) {
             const rect = dz.getBoundingClientRect();
@@ -262,7 +262,7 @@
           const x = touch.clientX;
           const y = touch.clientY;
           const dropzones = document.querySelectorAll(".dropzone");
-          const tolerancia = 20;
+          const tolerancia = 10;
 
           document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("dragover"));
 

@@ -196,7 +196,7 @@
       transform-origin: top center;
       overflow: scroll;
       margin: 160px 10px 50px -5%;
-      width: 110%;
+      width: 100%;
     }
     .dropzone {
       width: 40px;

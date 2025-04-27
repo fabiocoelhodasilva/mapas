@@ -140,7 +140,6 @@
     function criarElementos() {
       wordsBar.innerHTML = "";
       mapContainer.innerHTML = '<img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />';
-
       estados.forEach(estado => {
         const wordBox = document.createElement("div");
         wordBox.className = "word-box";
@@ -155,34 +154,19 @@
         dropzone.dataset.estado = estado;
         dropzone.ondrop = drop;
         dropzone.ondragover = allowDrop;
+        dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
         dropzone.style.top = posicoes[estado].top;
         dropzone.style.left = posicoes[estado].left;
-        dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
         dropzone.addEventListener("dragenter", dragEnter);
         dropzone.addEventListener("dragleave", dragLeave);
         mapContainer.appendChild(dropzone);
       });
     }
 
-    function allowDrop(event) {
-      event.preventDefault();
-    }
-
-    function dragEnter(event) {
-      if (event.target.classList.contains("dropzone")) {
-        event.target.classList.add("dragover");
-      }
-    }
-
-    function dragLeave(event) {
-      if (event.target.classList.contains("dropzone")) {
-        event.target.classList.remove("dragover");
-      }
-    }
-
-    function drag(event) {
-      event.dataTransfer.setData("text", event.target.id);
-    }
+    function allowDrop(event) { event.preventDefault(); }
+    function dragEnter(event) { if (event.target.classList.contains("dropzone")) event.target.classList.add("dragover"); }
+    function dragLeave(event) { if (event.target.classList.contains("dropzone")) event.target.classList.remove("dragover"); }
+    function drag(event) { event.dataTransfer.setData("text", event.target.id); }
 
     function drop(event) {
       event.preventDefault();
@@ -210,8 +194,7 @@
     }
 
     function verificarFinalizacao() {
-      const restantes = Array.from(document.querySelectorAll(".word-box"))
-        .filter(el => el.id !== "dragging-temp");
+      const restantes = Array.from(document.querySelectorAll(".word-box")).filter(el => el.id !== "dragging-temp");
       if (restantes.length === 0) {
         document.getElementById("parabens-container").style.display = "block";
       }
@@ -253,6 +236,23 @@
           const touch = e.touches[0];
           elementoTocado.style.left = (touch.pageX - 30) + "px";
           elementoTocado.style.top = (touch.pageY - 20) + "px";
+
+          document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("dragover"));
+          const x = touch.clientX;
+          const y = touch.clientY;
+          const tolerancia = 20;
+
+          for (let dz of document.querySelectorAll(".dropzone")) {
+            const rect = dz.getBoundingClientRect();
+            if (
+              x >= rect.left - tolerancia &&
+              x <= rect.right + tolerancia &&
+              y >= rect.top - tolerancia &&
+              y <= rect.bottom + tolerancia
+            ) {
+              dz.classList.add("dragover");
+            }
+          }
         }
       });
 
@@ -263,6 +263,8 @@
           const y = touch.clientY;
           const dropzones = document.querySelectorAll(".dropzone");
           const tolerancia = 20;
+
+          document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("dragover"));
 
           for (let dz of dropzones) {
             const rect = dz.getBoundingClientRect();

@@ -195,7 +195,7 @@
       transform: scale(0.94);
       transform-origin: top center;
       overflow: scroll;
-      margin: 160px 10px 50px -5%;
+      margin: 170px 0px 50px -2%;
       width: 100%;
     }
     .dropzone {

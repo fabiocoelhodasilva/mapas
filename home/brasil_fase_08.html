@@ -73,6 +73,9 @@
       animation: piscar 0.6s infinite;
       transform: scale(2.0);
     }
+    .dropzone.preenchido {
+      pointer-events: none;
+    }
     @keyframes piscar {
       0% { background-color: rgba(255, 255, 0, 0.2); }
       50% { background-color: rgba(255, 255, 0, 1); }
@@ -81,225 +84,135 @@
   </style>
 </head>
 <body>
-  <div id="header">Estados do Brasil</div>
-  <div id="words-bar"></div>
-  <div id="main-container">
-    <div id="map-container">
-      <img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />
-    </div>
+<div id="header">Estados do Brasil</div>
+<div id="words-bar"></div>
+<div id="main-container">
+  <div id="map-container">
+    <img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />
   </div>
-  <div id="parabens-container">
-    <button id="fechar-parabens" onclick="fecharParabens()">&times;</button>
-    <h2>Parabéns, você acertou todas as alternativas deste nível!</h2>
-    <button id="jogar-novamente" onclick="reiniciarFase()">Jogar novamente</button>
-  </div>
-  <script>
-    const estados = [
-      "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia",
-      "Ceará", "Distrito Federal", "Espírito Santo",
-      "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul",
-      "Minas Gerais", "Pará", "Paraíba", "Paraná",
-      "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte",
-      "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina",
-      "São Paulo", "Sergipe", "Tocantins"
-    ];
+</div>
+<div id="parabens-container">
+  <button id="fechar-parabens" onclick="fecharParabens()">&times;</button>
+  <h2>Parabéns, você acertou todas as alternativas deste nível!</h2>
+  <button id="jogar-novamente" onclick="reiniciarFase()">Jogar novamente</button>
+</div>
+<script>
+const estados = ["Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo", "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná", "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima", "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"];
 
-    const posicoes = {
-      "Acre": { top: "39%", left: "5%" },
-      "Alagoas": { top: "40%", left: "93%" },
-      "Amapá": { top: "10%", left: "49%" },
-      "Amazonas": { top: "25%", left: "18%" },
-      "Bahia": { top: "45%", left: "72%" },
-      "Ceará": { top: "22%", left: "84%" },
-      "Distrito Federal": { top: "53.5%", left: "64.7%" },
-      "Espírito Santo": { top: "63%", left: "79%" },
-      "Goiás": { top: "57%", left: "53%" },
-      "Maranhão": { top: "28%", left: "65%" },
-      "Mato Grosso": { top: "48%", left: "40%" },
-      "Mato Grosso do Sul": { top: "65%", left: "42%" },
-      "Minas Gerais": { top: "61%", left: "66%" },
-      "Pará": { top: "25%", left: "47%" },
-      "Paraíba": { top: "32.7%", left: "95%" },
-      "Paraná": { top: "76.2%", left: "48.6%" },
-      "Pernambuco": { top: "36.1%", left: "83%" },
-      "Piauí": { top: "34%", left: "70%" },
-      "Rio de Janeiro": { top: "72%", left: "74%" },
-      "Rio Grande do Norte": { top: "28.5%", left: "87%" },
-      "Rio Grande do Sul": { top: "87%", left: "45%" },
-      "Rondônia": { top: "43.5%", left: "23.3%" },
-      "Roraima": { top: "7%", left: "25%" },
-      "Santa Catarina": { top: "82%", left: "62%" },
-      "São Paulo": { top: "69%", left: "54.5%" },
-      "Sergipe": { top: "45%", left: "88%" },
-      "Tocantins": { top: "42%", left: "57%" }
-    };
+const posicoes = {
+  "Acre": {top: "39%", left: "5%"}, 
+  "Alagoas": {top: "40%", left: "93%"}, 
+  "Amapá": {top: "10%", left: "49%"}, 
+  "Amazonas": {top: "25%", left: "18%"},
+   "Bahia": {top: "45%", left: "72%"}, 
+   "Ceará": {top: "22%", left: "84%"}, 
+   "Distrito Federal": {top: "53.5%", left: "64.7%"}, 
+   "Espírito Santo": {top: "63%", left: "79%"}, 
+   "Goiás": {top: "57%", left: "53%"}, 
+   "Maranhão": {top: "28%", left: "65%"}, 
+   "Mato Grosso": {top: "48%", left: "40%"}, 
+   "Mato Grosso do Sul": {top: "65%", left: "42%"}, 
+   "Minas Gerais": {top: "61%", left: "66%"}, 
+   "Pará": {top: "25%", left: "47%"}, 
+   "Paraíba": {top: "32.7%", left: "95%"}, 
+   "Paraná": {top: "76.2%", left: "48.6%"}, 
+   "Pernambuco": {top: "36.1%", left: "83%"}, 
+   "Piauí": {top: "34%", left: "70%"}, 
+   "Rio de Janeiro": {top: "72%", left: "74%"}, 
+   "Rio Grande do Norte": {top: "28.5%", left: "87%"}, 
+   "Rio Grande do Sul": {top: "87%", left: "45%"}, 
+   "Rondônia": {top: "43.5%", left: "23.3%"}, 
+   "Roraima": {top: "7%", left: "25%"}, 
+   "Santa Catarina": {top: "82%", left: "62%"}, 
+   "São Paulo": {top: "69%", left: "54.5%"}, 
+   "Sergipe": {top: "45%", left: "88%"}, 
+   "Tocantins": {top: "42%", left: "57%"}
+  };
 
-    const mapContainer = document.getElementById("map-container");
-    const wordsBar = document.getElementById("words-bar");
+const mapContainer = document.getElementById("map-container");
+const wordsBar = document.getElementById("words-bar");
 
-    function criarElementos() {
-      wordsBar.innerHTML = "";
-      mapContainer.innerHTML = '<img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />';
-      estados.forEach(estado => {
-        const wordBox = document.createElement("div");
-        wordBox.className = "word-box";
-        wordBox.draggable = true;
-        wordBox.ondragstart = drag;
-        wordBox.id = `word-${estado}`;
-        wordBox.innerText = estado;
-        wordsBar.appendChild(wordBox);
+function criarElementos() {
+  wordsBar.innerHTML = "";
+  mapContainer.innerHTML = '<img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />';
+  estados.forEach(estado => {
+    const wordBox = document.createElement("div");
+    wordBox.className = "word-box";
+    wordBox.draggable = true;
+    wordBox.ondragstart = drag;
+    wordBox.id = `word-${estado}`;
+    wordBox.innerText = estado;
+    wordsBar.appendChild(wordBox);
 
-        const dropzone = document.createElement("div");
-        dropzone.className = "dropzone";
-        dropzone.dataset.estado = estado;
-        dropzone.ondrop = drop;
-        dropzone.ondragover = allowDrop;
-        dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
-        dropzone.style.top = posicoes[estado].top;
-        dropzone.style.left = posicoes[estado].left;
-        dropzone.addEventListener("dragenter", dragEnter);
-        dropzone.addEventListener("dragleave", dragLeave);
-        mapContainer.appendChild(dropzone);
-      });
-    }
+    const dropzone = document.createElement("div");
+    dropzone.className = "dropzone";
+    dropzone.dataset.estado = estado;
+    dropzone.ondrop = drop;
+    dropzone.ondragover = allowDrop;
+    dropzone.id = `dropzone-${estado.replace(/\s+/g, "-")}`;
+    dropzone.style.top = posicoes[estado].top;
+    dropzone.style.left = posicoes[estado].left;
+    dropzone.addEventListener("dragenter", dragEnter);
+    dropzone.addEventListener("dragleave", dragLeave);
+    mapContainer.appendChild(dropzone);
+  });
+}
 
-    function allowDrop(event) { event.preventDefault(); }
-    function dragEnter(event) { if (event.target.classList.contains("dropzone")) event.target.classList.add("dragover"); }
-    function dragLeave(event) { if (event.target.classList.contains("dropzone")) event.target.classList.remove("dragover"); }
-    function drag(event) { event.dataTransfer.setData("text", event.target.id); }
+function allowDrop(event) { event.preventDefault(); }
+function dragEnter(event) {
+  if (event.target.classList.contains("dropzone") && !event.target.classList.contains("preenchido")) {
+    event.target.classList.add("dragover");
+  }
+}
+function dragLeave(event) {
+  if (event.target.classList.contains("dropzone")) {
+    event.target.classList.remove("dragover");
+  }
+}
+function drag(event) { event.dataTransfer.setData("text", event.target.id); }
 
-    function drop(event) {
-      event.preventDefault();
-      const draggedId = event.dataTransfer.getData("text");
-      const draggedElement = document.getElementById(draggedId);
-      const dropzone = event.target;
-      dropzone.classList.remove("dragover");
+function drop(event) {
+  event.preventDefault();
+  const draggedId = event.dataTransfer.getData("text");
+  const draggedElement = document.getElementById(draggedId);
+  const dropzone = event.target;
+  if (dropzone.classList.contains("preenchido")) return;
+  dropzone.classList.remove("dragover");
 
-      const estadoCorreto = dropzone.dataset.estado;
-      const estadoArrastado = draggedElement.innerText;
+  const estadoCorreto = dropzone.dataset.estado;
+  const estadoArrastado = draggedElement.innerText;
 
-      if (estadoCorreto === estadoArrastado) {
-        dropzone.innerText = estadoArrastado;
-        dropzone.style.border = "2px solid green";
-        dropzone.style.color = "white";
-        dropzone.style.fontWeight = "bold";
-        draggedElement.remove();
-        verificarFinalizacao();
-      } else {
-        dropzone.style.border = "2px solid red";
-        setTimeout(() => {
-          dropzone.style.border = "2px solid #fcf8f8";
-        }, 1000);
-      }
-    }
+  if (estadoCorreto === estadoArrastado) {
+    dropzone.innerText = estadoArrastado;
+    dropzone.classList.add("preenchido");
+    dropzone.style.border = "2px solid green";
+    dropzone.style.color = "white";
+    dropzone.style.fontWeight = "bold";
+    draggedElement.remove();
+    verificarFinalizacao();
+  } else {
+    dropzone.style.border = "2px solid red";
+    setTimeout(() => { dropzone.style.border = "2px solid #fcf8f8"; }, 1000);
+  }
+}
 
-    function verificarFinalizacao() {
-      const restantes = Array.from(document.querySelectorAll(".word-box")).filter(el => el.id !== "dragging-temp");
-      if (restantes.length === 0) {
-        document.getElementById("parabens-container").style.display = "block";
-      }
-    }
+function verificarFinalizacao() {
+  const restantes = Array.from(document.querySelectorAll(".word-box")).filter(el => el.id !== "dragging-temp");
+  if (restantes.length === 0) {
+    document.getElementById("parabens-container").style.display = "block";
+  }
+}
 
-    function reiniciarFase() {
-      document.getElementById("parabens-container").style.display = "none";
-      criarElementos();
-    }
+function reiniciarFase() {
+  document.getElementById("parabens-container").style.display = "none";
+  criarElementos();
+}
 
-    function fecharParabens() {
-      document.getElementById("parabens-container").style.display = "none";
-    }
+function fecharParabens() {
+  document.getElementById("parabens-container").style.display = "none";
+}
 
-    criarElementos();
-
-    if ('ontouchstart' in window || navigator.maxTouchPoints) {
-      let tocando = false;
-      let elementoTocado = null;
-
-      wordsBar.addEventListener("touchstart", (e) => {
-        const touch = e.touches[0];
-        const target = e.target;
-
-        if (target.classList.contains("word-box")) {
-          e.preventDefault();
-          tocando = true;
-          elementoTocado = target.cloneNode(true);
-          elementoTocado.classList.add("touch-dragging");
-          elementoTocado.id = "dragging-temp";
-          elementoTocado.style.left = touch.pageX + "px";
-          elementoTocado.style.top = touch.pageY + "px";
-          document.body.appendChild(elementoTocado);
-        }
-      });
-
-      window.addEventListener("touchmove", (e) => {
-        if (tocando && elementoTocado) {
-          const touch = e.touches[0];
-          elementoTocado.style.left = (touch.pageX - 30) + "px";
-          elementoTocado.style.top = (touch.pageY - 20) + "px";
-
-          document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("dragover"));
-          const x = touch.clientX;
-          const y = touch.clientY;
-          const tolerancia = 10;
-
-          for (let dz of document.querySelectorAll(".dropzone")) {
-            const rect = dz.getBoundingClientRect();
-            if (
-              x >= rect.left - tolerancia &&
-              x <= rect.right + tolerancia &&
-              y >= rect.top - tolerancia &&
-              y <= rect.bottom + tolerancia
-            ) {
-              dz.classList.add("dragover");
-            }
-          }
-        }
-      });
-
-      window.addEventListener("touchend", (e) => {
-        if (tocando && elementoTocado) {
-          const touch = e.changedTouches[0];
-          const x = touch.clientX;
-          const y = touch.clientY;
-          const dropzones = document.querySelectorAll(".dropzone");
-          const tolerancia = 10;
-
-          document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("dragover"));
-
-          for (let dz of dropzones) {
-            const rect = dz.getBoundingClientRect();
-            if (
-              x >= rect.left - tolerancia &&
-              x <= rect.right + tolerancia &&
-              y >= rect.top - tolerancia &&
-              y <= rect.bottom + tolerancia
-            ) {
-              const estadoCorreto = dz.dataset.estado;
-              const estadoArrastado = elementoTocado.innerText;
-
-              if (estadoCorreto === estadoArrastado) {
-                dz.innerText = estadoArrastado;
-                dz.style.border = "2px solid green";
-                dz.style.color = "white";
-                dz.style.fontWeight = "bold";
-                document.getElementById(`word-${estadoArrastado}`)?.remove();
-                verificarFinalizacao();
-              } else {
-                dz.style.border = "2px solid red";
-                setTimeout(() => {
-                  dz.style.border = "2px solid #fcf8f8";
-                }, 1000);
-              }
-              break;
-            }
-          }
-
-          document.getElementById("dragging-temp")?.remove();
-          elementoTocado = null;
-          tocando = false;
-        }
-      });
-    }
-  </script>
+criarElementos();
+</script>
 </body>
 </html>

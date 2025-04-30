@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Estados do Brasil - Fase 02</title>
-  <link rel="stylesheet" href="../css/style.css"/>
+  <title>Estados do Brasil - Fase 07</title>
+  <link rel="stylesheet" href="../../css/style.css"/>
   <style>
     #parabens-container {
       position: fixed;
@@ -100,6 +100,12 @@
 const estados = [
   "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia",
   "Ceará", "Distrito Federal", "Espírito Santo",
+  "Goiás", "Maranhão", "Mato Grosso",
+  "Mato Grosso do Sul", "Minas Gerais", "Pará",
+  "Paraíba", "Paraná", "Pernambuco", "Piauí",
+  "Rio de Janeiro", "Rio Grande do Norte",
+  "Rio Grande do Sul", "Rondônia", "Roraima",
+  "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"
 ];
 
 const posicoes = {
@@ -111,6 +117,25 @@ const posicoes = {
   "Ceará": { top: "22%", left: "84%" },
   "Distrito Federal": { top: "53.5%", left: "64.7%" },
   "Espírito Santo": { top: "63%", left: "79%" },
+  "Goiás": { top: "57%", left: "53%" },
+  "Maranhão": { top: "28%", left: "65%" },
+  "Mato Grosso": { top: "48%", left: "40%" },
+  "Mato Grosso do Sul": { top: "65%", left: "42%" },
+  "Minas Gerais": { top: "61%", left: "66%" },
+  "Pará": { top: "25%", left: "47%" },
+  "Paraíba": { top: "32.7%", left: "95%" },
+  "Paraná": { top: "76.2%", left: "48.6%" },
+  "Pernambuco": { top: "36.1%", left: "83%" },
+  "Piauí": { top: "34%", left: "70%" },
+  "Rio de Janeiro": { top: "72%", left: "74%" },
+  "Rio Grande do Norte": { top: "28.5%", left: "87%" },
+  "Rio Grande do Sul": { top: "87%", left: "45%" },
+  "Rondônia": { top: "43.5%", left: "23.3%" },
+  "Roraima": { top: "7%", left: "25%" },
+  "Santa Catarina": { top: "82%", left: "62%" },
+  "São Paulo": { top: "69%", left: "54.5%" },
+  "Sergipe": { top: "45%", left: "88%" },
+  "Tocantins": { top: "42%", left: "57%" }
 };
 
 const mapContainer = document.getElementById("map-container");
@@ -118,7 +143,7 @@ const wordsBar = document.getElementById("words-bar");
 
 function criarElementos() {
   wordsBar.innerHTML = "";
-  mapContainer.innerHTML = '<img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />';
+  mapContainer.innerHTML = '<img src="../../img/mapa_brasil.png" alt="Mapa do Brasil" />';
   estados.forEach(estado => {
     const wordBox = document.createElement("div");
     wordBox.className = "word-box";
@@ -275,4 +300,3 @@ if ('ontouchstart' in window || navigator.maxTouchPoints) {
 </script>
 </body>
 </html>
-

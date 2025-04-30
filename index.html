@@ -2,22 +2,61 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Jogo dos Estados do Brasil</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body class="index-body">
-  <div class="index-conteudo">
-    <h1 class="index-titulo">Escolha o nível de dificuldade</h1>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo Educacional</title>
+  <link rel="stylesheet" href="./css/stylemat.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
 
-    <a class="index-nivel-link" href="home/brasil_fase_01.html">Nível 01</a>
-    <a class="index-nivel-link" href="home/brasil_fase_02.html">Nível 02</a>
-    <a class="index-nivel-link" href="home/brasil_fase_03.html">Nível 03</a>
-    <a class="index-nivel-link" href="home/brasil_fase_04.html">Nível 04</a>
-    <a class="index-nivel-link" href="home/brasil_fase_05.html">Nível 05</a>
-    <a class="index-nivel-link" href="home/brasil_fase_06.html">Nível 06</a>
-    <a class="index-nivel-link" href="home/brasil_fase_07.html">Nível 07</a>
-    <a class="index-nivel-link" href="home/brasil_fase_08.html">Nível 08</a>
-</div>
+    h1 {
+      color: #333;
+      margin-bottom: 40px;
+    }
+
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: 80%;
+      max-width: 300px;
+    }
+
+    .menu-btn {
+      padding: 15px 20px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      border-radius: 12px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .menu-btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Escolha um Tema</h1>
+  <div class="btn-container">
+    <button class="menu-btn" onclick="location.href='./matematica/tabuada_2a3.html'">Matemática</button>
+    <button class="menu-btn" onclick="location.href='./geografia/pagina_mapas_brasil.html'">Geografia</button>
+
+    <!--<button class="menu-btn" onclick="alert('Em breve: jogo bíblico!')">Bíblia</button>-->
+
+  </div>
 </body>
 </html>
-

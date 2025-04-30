@@ -1,0 +1,228 @@
+/* =========================
+   ESTILOS GERAIS
+========================= */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+    text-align: center;
+    overflow-x: hidden; /* Evita rolagem horizontal */
+  }
+  
+  h1 {
+    color: #333;
+    margin: 10px 0;
+    font-size: 2.2em;
+  }
+  
+  /* =========================
+     ÁREA DOS BLOCOS SUPERIORES
+  ========================= */
+  #number-box {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px auto;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .word {
+    background-color: #ccc;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.2s;
+  }
+  .word:hover {
+    transform: scale(1.1);
+  }
+  
+  .word[data-color="#FFB3BA"] { background-color: #FFB3BA; }
+  .word[data-color="#FFDFBA"] { background-color: #FFDFBA; }
+  .word[data-color="#FFFFBA"] { background-color: #FFFFBA; }
+  .word[data-color="#BAFFC9"] { background-color: #BAFFC9; }
+  .word[data-color="#BAE1FF"] { background-color: #BAE1FF; }
+  .word[data-color="#E6E6FA"] { background-color: #E6E6FA; }
+  .word[data-color="#FFDAB9"] { background-color: #FFDAB9; }
+  .word[data-color="#E0FFFF"] { background-color: #E0FFFF; }
+  .word[data-color="#F0E68C"] { background-color: #F0E68C; }
+  .word[data-color="#D8BFD8"] { background-color: #D8BFD8; }
+  
+  /* =========================
+     ÁREA DA TABELA
+  ========================= */
+  .container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto 30px;
+    overflow-x: auto;
+    padding: 0 10px;
+    box-sizing: border-box;
+  }
+  
+  table {
+    width: 100%;
+    max-width: 1000px;
+    border-collapse: collapse;
+  }
+  
+  td {
+    border: 2px dashed #999;
+    padding: 2px 1px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 10px;
+    min-width: 80px;
+    transition: background-color 0.3s;
+  }
+  
+  .dropzone {
+    margin-top: 2px;
+    min-height: 34px;
+    border-radius: 6px;
+    font-size: 22px;
+  }
+  
+  .dropzone.preenchido {
+    pointer-events: none;
+  }
+  
+  .dropped {
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 20px;
+    display: inline-block;
+    color: #000;
+    font-weight: bold;
+  }
+  
+  /* =========================
+     CORES DAS LINHAS
+  ========================= */
+  .row-1 td { background-color: #FFB3BA; }
+  .row-2 td { background-color: #FFDFBA; }
+  .row-3 td { background-color: #FFFFBA; }
+  .row-4 td { background-color: #BAFFC9; }
+  .row-5 td { background-color: #BAE1FF; }
+  .row-6 td { background-color: #E6E6FA; }
+  .row-7 td { background-color: #FFDAB9; }
+  .row-8 td { background-color: #E0FFFF; }
+  .row-9 td { background-color: #F0E68C; }
+  .row-10 td { background-color: #D8BFD8; }
+  
+  /* =========================
+     RESPONSIVIDADE
+  ========================= */
+  @media (max-width: 600px) {
+    td {
+      padding: 16px 4px;
+      font-size: 16px;
+    }
+  
+    .word {
+      font-size: 20px;
+      padding: 10px 15px;
+    }
+  
+    #number-box {
+      gap: 8px;
+      padding: 5px;
+    }
+  }
+  
+  /* =========================
+     ORGANIZAÇÃO POR LINHAS
+  ========================= */
+  .number-line {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  
+  /* =========================
+     TOQUE - CELULAR
+  ========================= */
+  .touch-dragging {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.9;
+    font-weight: bold;
+    background-color: yellow;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 9999;
+  }
+  
+  /* =========================
+     MENSAGEM DE PARABÉNS
+  ========================= */
+  #parabens-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 30px 40px;
+    border-radius: 16px;
+    text-align: center;
+    z-index: 2000;
+    color: #000;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.4s ease-out;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -55%); }
+    to   { opacity: 1; transform: translate(-50%, -50%); }
+  }
+  
+  #parabens-container h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+  }
+  
+  #jogar-novamente {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  #jogar-novamente:hover {
+    background-color: #104e8b;
+  }
+  
+  #fechar-parabens {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 22px;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #444;
+    transition: color 0.2s ease;
+  }
+  
+  #fechar-parabens:hover {
+    color: #ff3333;
+  }
+  

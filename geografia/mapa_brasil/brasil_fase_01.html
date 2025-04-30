@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Estados do Brasil - Fase 01</title>
-  <link rel="stylesheet" href="../css/style.css"/>
+  <link rel="stylesheet" href="../../css/style.css"/>
   <style>
     #parabens-container {
       position: fixed;
@@ -88,7 +88,7 @@
 <div id="words-bar"></div>
 <div id="main-container">
   <div id="map-container">
-    <img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />
+    <img src="../../img/mapa_brasil.png" alt="Mapa do Brasil" />
   </div>
 </div>
 <div id="parabens-container">
@@ -114,7 +114,7 @@ const wordsBar = document.getElementById("words-bar");
 
 function criarElementos() {
   wordsBar.innerHTML = "";
-  mapContainer.innerHTML = '<img src="../img/mapa_brasil.png" alt="Mapa do Brasil" />';
+  mapContainer.innerHTML = '<img src="../../img/mapa_brasil.png" alt="Mapa do Brasil" />';
   estados.forEach(estado => {
     const wordBox = document.createElement("div");
     wordBox.className = "word-box";

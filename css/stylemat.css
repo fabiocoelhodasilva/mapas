@@ -11,22 +11,11 @@ body {
     touch-action: manipulation;
   }
   
-  h1, .equacao, #parabens-container h2, #jogar-novamente, #fechar-parabens {
-    font-family: sans-serif;
-  }
-  
-  .word {
-    font-family: sans-serif;
-  }
-  
-  .dropped {
-    font-family: sans-serif;
-  }
-  
   h1 {
     color: #333;
     margin: 10px 0;
     font-size: 2.2em;
+    font-family: sans-serif !important;
   }
   
   /* =========================
@@ -57,6 +46,7 @@ body {
     border-radius: 12px;
     font-size: 20px;
     font-weight: bold;
+    font-family: sans-serif;
     box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
     cursor: grab;
     user-select: none;
@@ -85,6 +75,7 @@ body {
     align-items: center;
     font-size: 20px;
     font-weight: bold;
+    font-family: sans-serif;
     background-color: rgba(255,255,255,0.7);
     padding: 8px 12px;
     border-radius: 8px;
@@ -99,6 +90,7 @@ body {
     font-weight: bold;
     padding: 4px 8px;
     background-color: var(--cor);
+    font-family: sans-serif;
   }
   
   .dropzone.preenchido {
@@ -112,6 +104,7 @@ body {
     display: inline-block;
     color: #000;
     font-weight: bold;
+    font-family: sans-serif !important;
   }
   
   /* =========================
@@ -127,6 +120,7 @@ body {
     padding: 5px 10px;
     border-radius: 5px;
     z-index: 9999;
+    font-family: sans-serif;
   }
   
   /* =========================
@@ -145,6 +139,7 @@ body {
     color: #000;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     animation: fadeIn 0.4s ease-out;
+    font-family: sans-serif;
   }
   
   @keyframes fadeIn {
@@ -155,6 +150,7 @@ body {
   #parabens-container h2 {
     margin-bottom: 20px;
     font-size: 22px;
+    font-family: sans-serif;
   }
   
   #jogar-novamente {
@@ -167,6 +163,7 @@ body {
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    font-family: sans-serif;
   }
   
   #jogar-novamente:hover {
@@ -184,6 +181,7 @@ body {
     cursor: pointer;
     color: #444;
     transition: color 0.2s ease;
+    font-family: sans-serif;
   }
   
   #fechar-parabens:hover {

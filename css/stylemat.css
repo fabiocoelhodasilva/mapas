@@ -7,8 +7,8 @@ body {
     font-family: 'Comic Sans MS', cursive, sans-serif;
     background: linear-gradient(to bottom, #e0f7fa, #ffffff);
     text-align: center;
-    overflow-x: hidden; /* Evita rolagem horizontal */
-    touch-action: manipulation; /* Melhora o toque em mobile */
+    overflow-x: hidden;
+    touch-action: manipulation;
   }
   
   h1 {
@@ -18,21 +18,29 @@ body {
   }
   
   /* =========================
-     ÁREA DOS BLOCOS SUPERIORES
+     CONTAINERS DA TABUADA
   ========================= */
-  #number-box {
+  .grupo-container {
+    margin: 30px auto;
+    max-width: 1000px;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: var(--cor);
+  }
+  
+  /* =========================
+     LINHA DE NÚMEROS (BLOCOS)
+  ========================= */
+  .linha-tab {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    margin: 10px auto;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
+    gap: 30px;
+    margin-bottom: 16px;
   }
   
   .word {
-    background-color: #ccc;
+    background-color: var(--cor);
     padding: 12px 20px;
     border-radius: 12px;
     font-size: 20px;
@@ -41,59 +49,44 @@ body {
     cursor: grab;
     user-select: none;
     transition: transform 0.2s;
-    touch-action: none; /* Impede scroll durante drag em mobile */
+    touch-action: none;
     z-index: 10;
   }
+  
   .word:hover {
     transform: scale(1.1);
   }
   
-  /* Cores dos blocos conforme o atributo data-color */
-  .word[data-color="#FFB3BA"] { background-color: #FFB3BA; }
-  .word[data-color="#FFDFBA"] { background-color: #FFDFBA; }
-  .word[data-color="#FFFFBA"] { background-color: #FFFFBA; }
-  .word[data-color="#BAFFC9"] { background-color: #BAFFC9; }
-  .word[data-color="#BAE1FF"] { background-color: #BAE1FF; }
-  .word[data-color="#E6E6FA"] { background-color: #E6E6FA; }
-  .word[data-color="#FFDAB9"] { background-color: #FFDAB9; }
-  .word[data-color="#E0FFFF"] { background-color: #E0FFFF; }
-  .word[data-color="#F0E68C"] { background-color: #F0E68C; }
-  .word[data-color="#D8BFD8"] { background-color: #D8BFD8; }
-  
   /* =========================
-     ÁREA DA TABELA
+     ZONA DAS EQUA��ES
   ========================= */
-  .container {
+  .linha-tabula {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    width: 100%;
-    margin: 0 auto 30px;
-    overflow-x: auto;
-    padding: 0 10px;
-    box-sizing: border-box;
+    gap: 10px;
+    padding: 10px 0;
   }
   
-  table {
-    width: 100%;
-    max-width: 1000px;
-    border-collapse: collapse;
-  }
-  
-  td {
-    border: 2px dashed #999;
-    padding: 2px 1px;
+  .equacao {
+    display: flex;
+    align-items: center;
     font-size: 20px;
     font-weight: bold;
-    border-radius: 10px;
-    min-width: 80px;
-    transition: background-color 0.3s;
+    background-color: rgba(255,255,255,0.7);
+    padding: 8px 12px;
+    border-radius: 8px;
+    gap: 6px;
   }
   
   .dropzone {
-    margin-top: 2px;
-    min-height: 34px;
+    min-width: 40px;
+    min-height: 30px;
     border-radius: 6px;
-    font-size: 22px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 4px 8px;
+    background-color: var(--cor);
   }
   
   .dropzone.preenchido {
@@ -107,51 +100,6 @@ body {
     display: inline-block;
     color: #000;
     font-weight: bold;
-  }
-  
-  /* =========================
-     CORES DAS LINHAS
-  ========================= */
-  .row-1 td { background-color: #FFB3BA; }
-  .row-2 td { background-color: #FFDFBA; }
-  .row-3 td { background-color: #FFFFBA; }
-  .row-4 td { background-color: #BAFFC9; }
-  .row-5 td { background-color: #BAE1FF; }
-  .row-6 td { background-color: #E6E6FA; }
-  .row-7 td { background-color: #FFDAB9; }
-  .row-8 td { background-color: #E0FFFF; }
-  .row-9 td { background-color: #F0E68C; }
-  .row-10 td { background-color: #D8BFD8; }
-  
-  /* =========================
-     RESPONSIVIDADE
-  ========================= */
-  @media (max-width: 600px) {
-    td {
-      padding: 12px 2px;
-      font-size: 15px;
-    }
-  
-    .word {
-      font-size: 18px;
-      padding: 8px 14px;
-    }
-  
-    #number-box {
-      gap: 6px;
-      padding: 4px;
-    }
-  }
-  
-  /* =========================
-     ORGANIZAÇÃO POR LINHAS
-  ========================= */
-  .number-line {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 12px;
   }
   
   /* =========================
@@ -170,7 +118,7 @@ body {
   }
   
   /* =========================
-     MENSAGEM DE PARABÉNS
+     PARABÉNS
   ========================= */
   #parabens-container {
     position: fixed;
@@ -228,5 +176,22 @@ body {
   
   #fechar-parabens:hover {
     color: #ff3333;
+  }
+  
+  /* =========================
+     RESPONSIVO
+  ========================= */
+  @media (max-width: 600px) {
+    .linha-tabula {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .equacao {
+      font-size: 16px;
+    }
+    .word {
+      font-size: 18px;
+      padding: 8px 14px;
+    }
   }
   

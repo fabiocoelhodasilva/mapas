@@ -5,7 +5,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+    background-color: #ffffff;
     text-align: center;
     overflow-x: hidden;
     touch-action: manipulation;
@@ -88,6 +88,8 @@ body {
     padding: 8px 12px;
     border-radius: 8px;
     gap: 6px;
+    max-width: 140px; /* ajuste como preferir: 200px, 240px, etc */
+    width: 100%;
   }
   
   .dropzone {
@@ -215,13 +217,13 @@ body {
     }
   
     .word {
-      font-size: 18px;
+      font-size: 16px;
       padding: 10px 12px;
     }
   
     .dropzone {
       margin-top: 4px;
-      font-size: 16px;
+      font-size: 18px;
       padding: 6px 10px;
     }
   }

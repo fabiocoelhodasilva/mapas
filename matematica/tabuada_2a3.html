@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jogo da Tabuada</title>
-  <link rel="stylesheet" href="../css/stylemat.css">
+  <link rel="stylesheet" href="../css/stylemat.css" />
 </head>
 <body>
   <h1>Jogo da Tabuada</h1>
 
-  <!-- Blocos com as respostas a serem arrastadas -->
-  <div id="number-box">
-    <div class="number-line">
+  <!-- Grupo da Tabuada do 2 -->
+  <div class="grupo-container" style="--cor: #FFB3BA">
+    <div class="linha-tab">
       <div class="word" draggable="true" data-result="2" data-color="#FFB3BA">2</div>
       <div class="word" draggable="true" data-result="4" data-color="#FFB3BA">4</div>
       <div class="word" draggable="true" data-result="6" data-color="#FFB3BA">6</div>
@@ -23,7 +23,23 @@
       <div class="word" draggable="true" data-result="18" data-color="#FFB3BA">18</div>
       <div class="word" draggable="true" data-result="20" data-color="#FFB3BA">20</div>
     </div>
-    <div class="number-line">
+    <div class="linha-tabula">
+      <div class="equacao">2 x 1 = <div class="dropzone" data-expected="2"></div></div>
+      <div class="equacao">2 x 2 = <div class="dropzone" data-expected="4"></div></div>
+      <div class="equacao">2 x 3 = <div class="dropzone" data-expected="6"></div></div>
+      <div class="equacao">2 x 4 = <div class="dropzone" data-expected="8"></div></div>
+      <div class="equacao">2 x 5 = <div class="dropzone" data-expected="10"></div></div>
+      <div class="equacao">2 x 6 = <div class="dropzone" data-expected="12"></div></div>
+      <div class="equacao">2 x 7 = <div class="dropzone" data-expected="14"></div></div>
+      <div class="equacao">2 x 8 = <div class="dropzone" data-expected="16"></div></div>
+      <div class="equacao">2 x 9 = <div class="dropzone" data-expected="18"></div></div>
+      <div class="equacao">2 x 10 = <div class="dropzone" data-expected="20"></div></div>
+    </div>
+  </div>
+
+  <!-- Grupo da Tabuada do 3 -->
+  <div class="grupo-container" style="--cor: #FFDFBA">
+    <div class="linha-tab">
       <div class="word" draggable="true" data-result="3" data-color="#FFDFBA">3</div>
       <div class="word" draggable="true" data-result="6" data-color="#FFDFBA">6</div>
       <div class="word" draggable="true" data-result="9" data-color="#FFDFBA">9</div>
@@ -35,62 +51,40 @@
       <div class="word" draggable="true" data-result="27" data-color="#FFDFBA">27</div>
       <div class="word" draggable="true" data-result="30" data-color="#FFDFBA">30</div>
     </div>
+    <div class="linha-tabula">
+      <div class="equacao">3 x 1 = <div class="dropzone" data-expected="3"></div></div>
+      <div class="equacao">3 x 2 = <div class="dropzone" data-expected="6"></div></div>
+      <div class="equacao">3 x 3 = <div class="dropzone" data-expected="9"></div></div>
+      <div class="equacao">3 x 4 = <div class="dropzone" data-expected="12"></div></div>
+      <div class="equacao">3 x 5 = <div class="dropzone" data-expected="15"></div></div>
+      <div class="equacao">3 x 6 = <div class="dropzone" data-expected="18"></div></div>
+      <div class="equacao">3 x 7 = <div class="dropzone" data-expected="21"></div></div>
+      <div class="equacao">3 x 8 = <div class="dropzone" data-expected="24"></div></div>
+      <div class="equacao">3 x 9 = <div class="dropzone" data-expected="27"></div></div>
+      <div class="equacao">3 x 10 = <div class="dropzone" data-expected="30"></div></div>
+    </div>
   </div>
 
-  <!-- Tabela com as contas e as caixas para soltar -->
-  <div class="container">
-    <table>
-      <tr class="row-1">
-        <td>2 x 1<br><div class="dropzone" data-expected="2"></div></td>
-        <td>2 x 2<br><div class="dropzone" data-expected="4"></div></td>
-        <td>2 x 3<br><div class="dropzone" data-expected="6"></div></td>
-        <td>2 x 4<br><div class="dropzone" data-expected="8"></div></td>
-        <td>2 x 5<br><div class="dropzone" data-expected="10"></div></td>
-        <td>2 x 6<br><div class="dropzone" data-expected="12"></div></td>
-        <td>2 x 7<br><div class="dropzone" data-expected="14"></div></td>
-        <td>2 x 8<br><div class="dropzone" data-expected="16"></div></td>
-        <td>2 x 9<br><div class="dropzone" data-expected="18"></div></td>
-        <td>2 x 10<br><div class="dropzone" data-expected="20"></div></td>
-      </tr>
-      <tr class="row-2">
-        <td>3 x 1<br><div class="dropzone" data-expected="3"></div></td>
-        <td>3 x 2<br><div class="dropzone" data-expected="6"></div></td>
-        <td>3 x 3<br><div class="dropzone" data-expected="9"></div></td>
-        <td>3 x 4<br><div class="dropzone" data-expected="12"></div></td>
-        <td>3 x 5<br><div class="dropzone" data-expected="15"></div></td>
-        <td>3 x 6<br><div class="dropzone" data-expected="18"></div></td>
-        <td>3 x 7<br><div class="dropzone" data-expected="21"></div></td>
-        <td>3 x 8<br><div class="dropzone" data-expected="24"></div></td>
-        <td>3 x 9<br><div class="dropzone" data-expected="27"></div></td>
-        <td>3 x 10<br><div class="dropzone" data-expected="30"></div></td>
-      </tr>
-    </table>
-  </div>
-
-  <!-- Caixa de parabéns -->
+  <!-- Mensagem de parabéns -->
   <div id="parabens-container" style="display:none">
     <button id="fechar-parabens" onclick="this.parentElement.style.display='none'">&times;</button>
     <h2>Parabéns! Você completou esta fase!</h2>
     <button id="jogar-novamente" onclick="location.reload()">Jogar novamente</button>
   </div>
 
-  <!-- Lógica do jogo -->
+  <!-- Script -->
   <script>
-    // embaralha os blocos
-    function embaralharLinha(line) {
-      const filhos = Array.from(line.children);
-      for (let i = filhos.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        line.appendChild(filhos[j]);
-      }
+    function embaralharBlocos(grupoSelector) {
+      document.querySelectorAll(grupoSelector).forEach(container => {
+        const filhos = Array.from(container.children);
+        for (let i = filhos.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          container.appendChild(filhos[j]);
+        }
+      });
     }
-    document.querySelectorAll('.number-line').forEach(embaralharLinha);
 
-    function verificarFinalizacao() {
-      if (document.querySelectorAll('.word').length === 0) {
-        document.getElementById('parabens-container').style.display = 'block';
-      }
-    }
+    embaralharBlocos('.linha-tab');
 
     const words = document.querySelectorAll('.word');
     const dropzones = document.querySelectorAll('.dropzone');
@@ -103,47 +97,39 @@
     });
 
     dropzones.forEach(zone => {
-      zone.addEventListener('dragover', e => {
-        e.preventDefault();
-        if (!zone.classList.contains('preenchido')) {
-          zone.classList.add('dragover');
-        }
-      });
-
-      zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
-
+      zone.addEventListener('dragover', e => e.preventDefault());
       zone.addEventListener('drop', e => {
         e.preventDefault();
-        zone.classList.remove('dragover');
-        if (zone.classList.contains('preenchido')) return;
-
-        const dropped = e.dataTransfer.getData('text/plain');
-        const color = e.dataTransfer.getData('color');
-        const expected = zone.dataset.expected;
-
-        if (dropped === expected) {
-          zone.innerHTML = `<span class="dropped" style="background-color: ${color}">${dropped}</span>`;
+        const valor = e.dataTransfer.getData('text/plain');
+        const cor = e.dataTransfer.getData('color');
+        if (valor === zone.dataset.expected) {
+          zone.innerHTML = `<span class="dropped" style="background-color:${cor}">${valor}</span>`;
           zone.classList.add('preenchido');
           document.querySelectorAll('.word').forEach(w => {
-            if (w.textContent === dropped && w.dataset.color === color) w.remove();
+            if (w.textContent === valor && w.dataset.color === cor) w.remove();
           });
           verificarFinalizacao();
         }
       });
     });
 
-    // Suporte a toque em celular
+    function verificarFinalizacao() {
+      if (document.querySelectorAll('.word').length === 0) {
+        document.getElementById('parabens-container').style.display = 'block';
+      }
+    }
+
     if ('ontouchstart' in window || navigator.maxTouchPoints) {
       let tocando = false;
       let elementoTocado = null;
 
       document.body.addEventListener("touchstart", e => {
         const touch = e.touches[0];
-        const target = e.target;
-        if (target.classList.contains("word")) {
+        const alvo = e.target;
+        if (alvo.classList.contains("word")) {
           e.preventDefault();
           tocando = true;
-          elementoTocado = target.cloneNode(true);
+          elementoTocado = alvo.cloneNode(true);
           elementoTocado.classList.add("touch-dragging");
           elementoTocado.id = "dragging-temp";
           elementoTocado.style.left = touch.pageX + "px";
@@ -157,19 +143,6 @@
           const touch = e.touches[0];
           elementoTocado.style.left = (touch.pageX - 30) + "px";
           elementoTocado.style.top = (touch.pageY - 20) + "px";
-
-          const x = touch.clientX;
-          const y = touch.clientY;
-          const tolerancia = 20;
-          document.querySelectorAll(".dropzone:not(.preenchido)").forEach(dz => {
-            const rect = dz.getBoundingClientRect();
-            if (x >= rect.left - tolerancia && x <= rect.right + tolerancia &&
-                y >= rect.top - tolerancia && y <= rect.bottom + tolerancia) {
-              dz.classList.add("dragover");
-            } else {
-              dz.classList.remove("dragover");
-            }
-          });
         }
       });
 
@@ -178,20 +151,22 @@
           const touch = e.changedTouches[0];
           const x = touch.clientX;
           const y = touch.clientY;
-          const color = elementoTocado.dataset.color;
+          const cor = elementoTocado.dataset.color;
           const valor = elementoTocado.textContent;
-
-          document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("dragover"));
-
           for (let dz of document.querySelectorAll(".dropzone:not(.preenchido)")) {
             const rect = dz.getBoundingClientRect();
-            if (x >= rect.left - 20 && x <= rect.right + 20 &&
-                y >= rect.top - 20 && y <= rect.bottom + 20) {
+            const tolerancia = 20;
+            if (
+              x >= rect.left - tolerancia &&
+              x <= rect.right + tolerancia &&
+              y >= rect.top - tolerancia &&
+              y <= rect.bottom + tolerancia
+            ) {
               if (dz.dataset.expected === valor) {
-                dz.innerHTML = `<span class=\"dropped\" style=\"background-color: ${color}\">${valor}</span>`;
+                dz.innerHTML = `<span class=\"dropped\" style=\"background-color:${cor}\">${valor}</span>`;
                 dz.classList.add("preenchido");
                 document.querySelectorAll('.word').forEach(w => {
-                  if (w.textContent === valor && w.dataset.color === color) w.remove();
+                  if (w.textContent === valor && w.dataset.color === cor) w.remove();
                 });
                 verificarFinalizacao();
               }

@@ -3,71 +3,207 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jogo Educacional</title>
-  <link rel="stylesheet" href="../css/style.css">
-  <style>
-    /* Estilos gerais do corpo da página */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
-      background: linear-gradient(to bottom, #e0f7fa, #ffffff); /* Fundo gradiente */
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      text-align: center;
-    }
-
-    /* Título principal */
-    h1 {
-      color: #333;
-      margin-bottom: 40px;
-    }
-
-    /* Contêiner dos botões */
-    .btn-container {
-      display: flex;
-      flex-direction: column;
-      gap: 20px; /* Espaço entre os botões */
-      width: 80%;
-      max-width: 300px;
-    }
-
-    /* Estilo dos botões do menu */
-    .menu-btn {
-      padding: 15px 20px;
-      font-size: 18px;
-      font-weight: bold;
-      border: none;
-      border-radius: 12px;
-      background-color: #007BFF;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    /* Efeito de hover nos botões */
-    .menu-btn:hover {
-      background-color: #0056b3;
-    }
-  </style>
+  <title>Jogo da Tabuada</title>
+  <link rel="stylesheet" href="../css/stylemat.css">
 </head>
 <body>
-  <!-- Título da página -->
-  <h1>Escolha um Tema</h1>
+  <h1>Jogo da Tabuada</h1>
 
-  <!-- Botões de navegação para os temas -->
-  <div class="btn-container">
-    <!-- Redireciona para o jogo da tabuada -->
-    <button class="menu-btn" onclick="location.href='../matematica/tabuada_2a3.html'">Matemática</button>
-
-    <!-- Redireciona para o jogo dos estados do Brasil -->
-    <button class="menu-btn" onclick="location.href='../geografia/pagina_mapas_brasil.html'">Geografia</button>
-
-    <!-- Alerta de função futura -->
-    <button class="menu-btn" onclick="alert('Em breve: jogo bíblico!')">Bíblia</button>
+  <!-- Blocos com as respostas a serem arrastadas -->
+  <div id="number-box">
+    <div class="number-line">
+      <div class="word" draggable="true" data-result="2" data-color="#FFB3BA">2</div>
+      <div class="word" draggable="true" data-result="4" data-color="#FFB3BA">4</div>
+      <div class="word" draggable="true" data-result="6" data-color="#FFB3BA">6</div>
+      <div class="word" draggable="true" data-result="8" data-color="#FFB3BA">8</div>
+      <div class="word" draggable="true" data-result="10" data-color="#FFB3BA">10</div>
+      <div class="word" draggable="true" data-result="12" data-color="#FFB3BA">12</div>
+      <div class="word" draggable="true" data-result="14" data-color="#FFB3BA">14</div>
+      <div class="word" draggable="true" data-result="16" data-color="#FFB3BA">16</div>
+      <div class="word" draggable="true" data-result="18" data-color="#FFB3BA">18</div>
+      <div class="word" draggable="true" data-result="20" data-color="#FFB3BA">20</div>
+    </div>
+    <div class="number-line">
+      <div class="word" draggable="true" data-result="3" data-color="#FFDFBA">3</div>
+      <div class="word" draggable="true" data-result="6" data-color="#FFDFBA">6</div>
+      <div class="word" draggable="true" data-result="9" data-color="#FFDFBA">9</div>
+      <div class="word" draggable="true" data-result="12" data-color="#FFDFBA">12</div>
+      <div class="word" draggable="true" data-result="15" data-color="#FFDFBA">15</div>
+      <div class="word" draggable="true" data-result="18" data-color="#FFDFBA">18</div>
+      <div class="word" draggable="true" data-result="21" data-color="#FFDFBA">21</div>
+      <div class="word" draggable="true" data-result="24" data-color="#FFDFBA">24</div>
+      <div class="word" draggable="true" data-result="27" data-color="#FFDFBA">27</div>
+      <div class="word" draggable="true" data-result="30" data-color="#FFDFBA">30</div>
+    </div>
   </div>
+
+  <!-- Tabela com as contas e as caixas para soltar -->
+  <div class="container">
+    <table>
+      <tr class="row-1">
+        <td>2 x 1<br><div class="dropzone" data-expected="2"></div></td>
+        <td>2 x 2<br><div class="dropzone" data-expected="4"></div></td>
+        <td>2 x 3<br><div class="dropzone" data-expected="6"></div></td>
+        <td>2 x 4<br><div class="dropzone" data-expected="8"></div></td>
+        <td>2 x 5<br><div class="dropzone" data-expected="10"></div></td>
+        <td>2 x 6<br><div class="dropzone" data-expected="12"></div></td>
+        <td>2 x 7<br><div class="dropzone" data-expected="14"></div></td>
+        <td>2 x 8<br><div class="dropzone" data-expected="16"></div></td>
+        <td>2 x 9<br><div class="dropzone" data-expected="18"></div></td>
+        <td>2 x 10<br><div class="dropzone" data-expected="20"></div></td>
+      </tr>
+      <tr class="row-2">
+        <td>3 x 1<br><div class="dropzone" data-expected="3"></div></td>
+        <td>3 x 2<br><div class="dropzone" data-expected="6"></div></td>
+        <td>3 x 3<br><div class="dropzone" data-expected="9"></div></td>
+        <td>3 x 4<br><div class="dropzone" data-expected="12"></div></td>
+        <td>3 x 5<br><div class="dropzone" data-expected="15"></div></td>
+        <td>3 x 6<br><div class="dropzone" data-expected="18"></div></td>
+        <td>3 x 7<br><div class="dropzone" data-expected="21"></div></td>
+        <td>3 x 8<br><div class="dropzone" data-expected="24"></div></td>
+        <td>3 x 9<br><div class="dropzone" data-expected="27"></div></td>
+        <td>3 x 10<br><div class="dropzone" data-expected="30"></div></td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Caixa de parabéns -->
+  <div id="parabens-container" style="display:none">
+    <button id="fechar-parabens" onclick="this.parentElement.style.display='none'">&times;</button>
+    <h2>Parabéns! Você completou esta fase!</h2>
+    <button id="jogar-novamente" onclick="location.reload()">Jogar novamente</button>
+  </div>
+
+  <!-- Lógica do jogo -->
+  <script>
+    // embaralha os blocos
+    function embaralharLinha(line) {
+      const filhos = Array.from(line.children);
+      for (let i = filhos.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        line.appendChild(filhos[j]);
+      }
+    }
+    document.querySelectorAll('.number-line').forEach(embaralharLinha);
+
+    function verificarFinalizacao() {
+      if (document.querySelectorAll('.word').length === 0) {
+        document.getElementById('parabens-container').style.display = 'block';
+      }
+    }
+
+    const words = document.querySelectorAll('.word');
+    const dropzones = document.querySelectorAll('.dropzone');
+
+    words.forEach(word => {
+      word.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', word.dataset.result);
+        e.dataTransfer.setData('color', word.dataset.color);
+      });
+    });
+
+    dropzones.forEach(zone => {
+      zone.addEventListener('dragover', e => {
+        e.preventDefault();
+        if (!zone.classList.contains('preenchido')) {
+          zone.classList.add('dragover');
+        }
+      });
+
+      zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('dragover');
+        if (zone.classList.contains('preenchido')) return;
+
+        const dropped = e.dataTransfer.getData('text/plain');
+        const color = e.dataTransfer.getData('color');
+        const expected = zone.dataset.expected;
+
+        if (dropped === expected) {
+          zone.innerHTML = `<span class="dropped" style="background-color: ${color}">${dropped}</span>`;
+          zone.classList.add('preenchido');
+          document.querySelectorAll('.word').forEach(w => {
+            if (w.textContent === dropped && w.dataset.color === color) w.remove();
+          });
+          verificarFinalizacao();
+        }
+      });
+    });
+
+    // Suporte a toque em celular
+    if ('ontouchstart' in window || navigator.maxTouchPoints) {
+      let tocando = false;
+      let elementoTocado = null;
+
+      document.body.addEventListener("touchstart", e => {
+        const touch = e.touches[0];
+        const target = e.target;
+        if (target.classList.contains("word")) {
+          e.preventDefault();
+          tocando = true;
+          elementoTocado = target.cloneNode(true);
+          elementoTocado.classList.add("touch-dragging");
+          elementoTocado.id = "dragging-temp";
+          elementoTocado.style.left = touch.pageX + "px";
+          elementoTocado.style.top = touch.pageY + "px";
+          document.body.appendChild(elementoTocado);
+        }
+      });
+
+      window.addEventListener("touchmove", e => {
+        if (tocando && elementoTocado) {
+          const touch = e.touches[0];
+          elementoTocado.style.left = (touch.pageX - 30) + "px";
+          elementoTocado.style.top = (touch.pageY - 20) + "px";
+
+          const x = touch.clientX;
+          const y = touch.clientY;
+          const tolerancia = 20;
+          document.querySelectorAll(".dropzone:not(.preenchido)").forEach(dz => {
+            const rect = dz.getBoundingClientRect();
+            if (x >= rect.left - tolerancia && x <= rect.right + tolerancia &&
+                y >= rect.top - tolerancia && y <= rect.bottom + tolerancia) {
+              dz.classList.add("dragover");
+            } else {
+              dz.classList.remove("dragover");
+            }
+          });
+        }
+      });
+
+      window.addEventListener("touchend", e => {
+        if (tocando && elementoTocado) {
+          const touch = e.changedTouches[0];
+          const x = touch.clientX;
+          const y = touch.clientY;
+          const color = elementoTocado.dataset.color;
+          const valor = elementoTocado.textContent;
+
+          document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("dragover"));
+
+          for (let dz of document.querySelectorAll(".dropzone:not(.preenchido)")) {
+            const rect = dz.getBoundingClientRect();
+            if (x >= rect.left - 20 && x <= rect.right + 20 &&
+                y >= rect.top - 20 && y <= rect.bottom + 20) {
+              if (dz.dataset.expected === valor) {
+                dz.innerHTML = `<span class=\"dropped\" style=\"background-color: ${color}\">${valor}</span>`;
+                dz.classList.add("preenchido");
+                document.querySelectorAll('.word').forEach(w => {
+                  if (w.textContent === valor && w.dataset.color === color) w.remove();
+                });
+                verificarFinalizacao();
+              }
+              break;
+            }
+          }
+          document.getElementById("dragging-temp")?.remove();
+          elementoTocado = null;
+          tocando = false;
+        }
+      });
+    }
+  </script>
 </body>
 </html>

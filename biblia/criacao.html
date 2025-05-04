@@ -12,6 +12,7 @@
       font-family: Arial, sans-serif;
       text-align: center;
       padding-bottom: 50px;
+      box-sizing: border-box;
     }
 
     h1 {
@@ -41,6 +42,7 @@
       box-sizing: border-box;
       position: relative;
       transition: all 0.3s ease;
+      min-height: 200px;
     }
 
     .card-container img {
@@ -140,24 +142,41 @@
 
       .card-container {
         width: 100%;
+        min-height: 180px;
+      }
+
+      .card-container img {
+        height: 100px;
+      }
+
+      /* Layout após finalização no celular */
+      .mobile-wrapper.finalizado {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
       }
 
       #ordenado.finalizado-mobile {
+        width: 100% !important;
+        padding: 0;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        width: 100%;
-        margin: 20px auto 0 auto;
-        padding: 0;
         gap: 18px;
         border-top: none;
         box-sizing: border-box;
       }
 
       #ordenado.finalizado-mobile .card-container {
-        width: 95vw;
+        width: 94vw;
         max-width: 380px;
+        min-height: 360px; /* altura dobrada */
+      }
+
+      #ordenado.finalizado-mobile .card-container img {
+        height: 290px; /* aumenta proporcionalmente */
       }
     }
   </style>
@@ -166,7 +185,7 @@
   <h1>Organize os Dias da Criação</h1>
   <div class="feedback" id="feedback-msg"></div>
 
-  <div class="mobile-wrapper">
+  <div class="mobile-wrapper" id="wrapper">
     <div id="cards-area"></div>
     <div id="ordenado"></div>
   </div>
@@ -188,6 +207,7 @@
     const ordenado = document.getElementById("ordenado");
     const feedback = document.getElementById("feedback-msg");
     const feedbackBottom = document.getElementById("feedback-msg-bottom");
+    const wrapper = document.getElementById("wrapper");
 
     const shuffled = [...cardsData].sort(() => Math.random() - 0.5);
 
@@ -245,8 +265,10 @@
             feedbackBottom.textContent = finalMsg;
             feedback.className = "feedback acerto";
             feedbackBottom.className = "feedback acerto";
+
             if (window.innerWidth < 768) {
               ordenado.classList.add("finalizado-mobile");
+              wrapper.classList.add("finalizado");
             }
           }
 

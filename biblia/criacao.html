@@ -75,12 +75,6 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .anjo-img {
-      width: 120px;
-      margin: 10px auto 0;
-      display: none;
-    }
-
     .piscar-card {
       animation: piscar-card 0.6s ease-in-out 2;
       border-color: red;
@@ -97,43 +91,57 @@
       100% { transform: scale(1); }
     }
 
-    /* 📱 Responsividade para celular */
     @media screen and (max-width: 600px) {
-      #cards-container, #dropzones-container {
+      .mobile-flex {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+        gap: 6px;
+        padding: 0 6px;
+        box-sizing: border-box;
+      }
+
+      #dropzones-container, #cards-container {
         flex-direction: column;
         align-items: center;
+        width: 48%;
+        gap: 10px;
       }
 
       .card, .dropzone {
-        width: 90%;
-        max-width: 320px;
+        width: 100%;
+        max-width: unset;
       }
 
       h1 {
         font-size: 20px;
         padding: 0 10px;
-      }
-
-      .anjo-img {
-        width: 80px;
+        width: 100%;
+        text-align: center;
       }
     }
   </style>
 </head>
 <body>
   <h1>Organize os Dias da Criação</h1>
-  <div id="cards-container"></div>
-  <div id="dropzones-container">
-    <div class="dropzone" data-ordem="1">Dia 1</div>
-    <div class="dropzone" data-ordem="2">Dia 2</div>
-    <div class="dropzone" data-ordem="3">Dia 3</div>
-    <div class="dropzone" data-ordem="4">Dia 4</div>
-    <div class="dropzone" data-ordem="5">Dia 5</div>
-    <div class="dropzone" data-ordem="6">Dia 6</div>
-    <div class="dropzone" data-ordem="7">Dia 7</div>
+
+  <div class="mobile-flex">
+    <div id="dropzones-container">
+      <div class="dropzone" data-ordem="1">Dia 1</div>
+      <div class="dropzone" data-ordem="2">Dia 2</div>
+      <div class="dropzone" data-ordem="3">Dia 3</div>
+      <div class="dropzone" data-ordem="4">Dia 4</div>
+      <div class="dropzone" data-ordem="5">Dia 5</div>
+      <div class="dropzone" data-ordem="6">Dia 6</div>
+      <div class="dropzone" data-ordem="7">Dia 7</div>
+    </div>
+
+    <div id="cards-container"></div>
   </div>
+
   <div id="resultado"></div>
-  <img src="img/anjo.png" alt="Anjo comemorando" class="anjo-img" id="anjo-celebrando">
 
   <script>
     const cardsData = [
@@ -209,17 +217,14 @@
       });
 
       const resultado = document.getElementById('resultado');
-      const anjo = document.getElementById('anjo-celebrando');
 
       if (correto) {
         resultado.textContent = 'Parabéns! Você organizou corretamente os dias da criação! ✅';
         resultado.classList.add('acertou');
-        anjo.style.display = 'block';
       } else {
         resultado.textContent = 'Ainda não está certo. Tente novamente! ❌';
         resultado.classList.remove('acertou');
         resultado.style.color = '#ff5555';
-        anjo.style.display = 'none';
       }
     }
   </script>

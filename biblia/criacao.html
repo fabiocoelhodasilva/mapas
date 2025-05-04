@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Criação - Ordem dos Dias</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1c1c1c;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 10px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin: 10px 0 5px;
+      text-align: center;
+    }
+
+    #cards-container, #dropzones-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 15px 0;
+    }
+
+    .card, .dropzone {
+      width: 160px;
+      min-height: 200px;
+      border: 2px dashed #ccc;
+      border-radius: 12px;
+      background-color: #333;
+      text-align: center;
+      padding: 10px;
+      color: white;
+      font-size: 14px;
+    }
+
+    .card {
+      cursor: grab;
+      background-color: #2e2e2e;
+      border: 2px solid #1e90ff;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .dropzone.over {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    #resultado {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #00ff99;
+      text-align: center;
+    }
+
+    #resultado.acertou {
+      animation: pulse 1s ease-in-out 3;
+      background: linear-gradient(90deg, #fff700, #00ffcc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .anjo-img {
+      width: 120px;
+      margin: 10px auto 0;
+      display: none;
+    }
+
+    .piscar-card {
+      animation: piscar-card 0.6s ease-in-out 2;
+      border-color: red;
+    }
+
+    @keyframes piscar-card {
+      0%, 100% { background-color: transparent; }
+      50% { background-color: rgba(255, 0, 0, 0.2); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    /* 📱 Responsividade para celular */
+    @media screen and (max-width: 600px) {
+      #cards-container, #dropzones-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .card, .dropzone {
+        width: 90%;
+        max-width: 320px;
+      }
+
+      h1 {
+        font-size: 20px;
+        padding: 0 10px;
+      }
+
+      .anjo-img {
+        width: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Organize os Dias da Criação</h1>
+  <div id="cards-container"></div>
+  <div id="dropzones-container">
+    <div class="dropzone" data-ordem="1">Dia 1</div>
+    <div class="dropzone" data-ordem="2">Dia 2</div>
+    <div class="dropzone" data-ordem="3">Dia 3</div>
+    <div class="dropzone" data-ordem="4">Dia 4</div>
+    <div class="dropzone" data-ordem="5">Dia 5</div>
+    <div class="dropzone" data-ordem="6">Dia 6</div>
+    <div class="dropzone" data-ordem="7">Dia 7</div>
+  </div>
+  <div id="resultado"></div>
+  <img src="img/anjo.png" alt="Anjo comemorando" class="anjo-img" id="anjo-celebrando">
+
+  <script>
+    const cardsData = [
+      { dia: "1", texto: "Haja luz", img: "img/dia1.jpg" },
+      { dia: "2", texto: "Firmamento no meio das águas", img: "img/dia2.jpg" },
+      { dia: "3", texto: "Apareça a porção seca", img: "img/dia3.jpg" },
+      { dia: "4", texto: "Sol, lua e estrelas", img: "img/dia4.jpg" },
+      { dia: "5", texto: "Criou os peixes e as aves", img: "img/dia5.jpg" },
+      { dia: "6", texto: "Animais e o homem", img: "img/dia6.jpg" },
+      { dia: "7", texto: "Deus descansou", img: "img/dia7.jpg" }
+    ];
+
+    function embaralhar(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    const container = document.getElementById('cards-container');
+    embaralhar(cardsData).forEach(data => {
+      const div = document.createElement('div');
+      div.className = 'card';
+      div.draggable = true;
+      div.dataset.dia = data.dia;
+      div.innerHTML = `<img src="${data.img}" alt="Imagem do dia"><div>${data.texto}</div>`;
+      container.appendChild(div);
+    });
+
+    const dropzones = document.querySelectorAll('.dropzone');
+
+    function addCardListeners(card) {
+      card.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', card.dataset.dia);
+        e.dataTransfer.setDragImage(card, 0, 0);
+        card.classList.add('dragging');
+      });
+      card.addEventListener('dragend', () => card.classList.remove('dragging'));
+    }
+
+    document.querySelectorAll('.card').forEach(addCardListeners);
+
+    dropzones.forEach(zone => {
+      zone.addEventListener('dragover', e => {
+        e.preventDefault();
+        zone.classList.add('over');
+      });
+      zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        const dia = e.dataTransfer.getData('text/plain');
+        const dragged = document.querySelector(`.card[data-dia='${dia}']`);
+        if (dragged) {
+          const existing = zone.querySelector('.card');
+          if (existing) container.appendChild(existing);
+          zone.innerHTML = `Dia ${zone.dataset.ordem}`;
+          zone.appendChild(dragged);
+          addCardListeners(dragged);
+          verificarOrdem();
+        }
+        zone.classList.remove('over');
+      });
+    });
+
+    function verificarOrdem() {
+      let correto = true;
+      dropzones.forEach(zone => {
+        const card = zone.querySelector('.card');
+        if (!card || card.dataset.dia !== zone.dataset.ordem) {
+          correto = false;
+          if (card) {
+            card.classList.add('piscar-card');
+            setTimeout(() => card.classList.remove('piscar-card'), 1200);
+          }
+        }
+      });
+
+      const resultado = document.getElementById('resultado');
+      const anjo = document.getElementById('anjo-celebrando');
+
+      if (correto) {
+        resultado.textContent = 'Parabéns! Você organizou corretamente os dias da criação! ✅';
+        resultado.classList.add('acertou');
+        anjo.style.display = 'block';
+      } else {
+        resultado.textContent = 'Ainda não está certo. Tente novamente! ❌';
+        resultado.classList.remove('acertou');
+        resultado.style.color = '#ff5555';
+        anjo.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

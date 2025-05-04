@@ -85,30 +85,28 @@
       border: 2px solid white;
       background: transparent;
       text-align: center;
-      line-height: 27px;
       font-size: 13px;
       z-index: 10;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
       color: white;
       font-weight: bold;
       transition: all 0.3s ease;
       white-space: nowrap;
     }
 
+    .dropzone input {
+      width: 100%;
+      height: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      font-size: 13px;
+    }
+
     .dropzone:hover {
       background: rgba(255, 255, 255, 0.4);
-    }
-
-    .dropzone.dragover {
-      animation: piscar 0.6s infinite;
-      transform: scale(2.0);
-    }
-
-    .dropzone.preenchido {
-      pointer-events: none;
     }
 
     @keyframes piscar {
@@ -205,12 +203,18 @@
       document.querySelectorAll(".dropzone").forEach(el => el.remove());
       const mapa = document.getElementById("map-container");
       sorteados.forEach((estado, i) => {
-        const input = document.createElement("div");
-        input.className = "dropzone";
+        const wrapper = document.createElement("div");
+        wrapper.className = "dropzone";
+        wrapper.style.top = posicoes[estado].top;
+        wrapper.style.left = posicoes[estado].left;
+
+        const input = document.createElement("input");
+        input.type = "text";
         input.id = `input-${i + 1}`;
-        input.style.top = posicoes[estado].top;
-        input.style.left = posicoes[estado].left;
-        mapa.appendChild(input);
+        input.placeholder = "";
+
+        wrapper.appendChild(input);
+        mapa.appendChild(wrapper);
       });
     }
     function normalizar(str) {
@@ -219,7 +223,7 @@
     function verificarDigitado() {
       const resultados = [];
       for (let i = 1; i <= 10; i++) {
-        const respUser = prompt(`Qual é o nome do estado ${i}?`).trim();
+        const respUser = document.getElementById(`input-${i}`).value.trim();
         const respCorreta = sorteados[i - 1];
         resultados.push({ usuario: respUser, correta: respCorreta });
       }
@@ -259,4 +263,3 @@
   </script>
 </body>
 </html>
-

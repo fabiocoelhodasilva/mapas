@@ -121,7 +121,7 @@
       left: 50%;
       transform: translate(-50%, -50%);
       background-color: rgba(255, 255, 255, 0.95);
-      padding: 30px 40px;
+      padding: 30px 40px 20px 40px;
       border-radius: 16px;
       text-align: center;
       z-index: 2000;
@@ -137,13 +137,13 @@
 
     @media screen and (max-width: 480px) {
       #resultado-final table {
-        transform: scale(0.8);
+        transform: scale(0.7);
         transform-origin: top center;
       }
       .dropzone {
         width: 40px;
         height: 11px;
-        font-size: 7px;
+        font-size: 6px;
       }
     }
 
@@ -246,7 +246,7 @@
           </tr>`;
       });
       tabela += `</tbody></table>
-        <div style="text-align: center; margin-top: 20px;">
+        <div style="text-align: center; margin-top: 10px;">
           <button onclick="reiniciarDesafio()" style="padding: 12px 24px; font-size: 16px; font-weight: bold; background-color: #1e90ff; color: white; border: none; border-radius: 8px; cursor: pointer;">Jogar novamente</button>
         </div>`;
       document.getElementById("resultado-final").innerHTML = tabela;

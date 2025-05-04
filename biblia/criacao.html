@@ -5,15 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Criação - Ordem dos Dias</title>
   <style>
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
       font-family: Arial, sans-serif;
       background-color: #1c1c1c;
       color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 10px;
+      overflow-x: hidden;
+      overscroll-behavior: contain;
     }
 
     h1 {
@@ -105,8 +104,6 @@
       position: absolute;
       z-index: 1000;
       pointer-events: none;
-      width: 160px;
-      min-height: 200px;
       background-color: #2e2e2e;
       border: 2px solid #1e90ff;
       border-radius: 12px;
@@ -115,6 +112,8 @@
       color: white;
       font-size: 14px;
       text-align: center;
+      width: 160px;
+      min-height: 200px;
     }
 
     .touch-dragging img {
@@ -152,13 +151,6 @@
         height: 80px;
       }
 
-      h1 {
-        font-size: 20px;
-        padding: 0 10px;
-        width: 100%;
-        text-align: center;
-      }
-
       .touch-dragging {
         width: 100%;
         min-height: 160px;
@@ -174,16 +166,7 @@
   <h1>Organize os Dias da Criação</h1>
 
   <div class="mobile-flex">
-    <div id="dropzones-container">
-      <div class="dropzone" data-ordem="1">Dia 1</div>
-      <div class="dropzone" data-ordem="2">Dia 2</div>
-      <div class="dropzone" data-ordem="3">Dia 3</div>
-      <div class="dropzone" data-ordem="4">Dia 4</div>
-      <div class="dropzone" data-ordem="5">Dia 5</div>
-      <div class="dropzone" data-ordem="6">Dia 6</div>
-      <div class="dropzone" data-ordem="7">Dia 7</div>
-    </div>
-
+    <div id="dropzones-container"></div>
     <div id="cards-container"></div>
   </div>
 
@@ -200,12 +183,10 @@
       { dia: "7", texto: "Deus descansou", img: "img/dia7.jpg" }
     ];
 
-    function embaralhar(array) {
-      return array.sort(() => Math.random() - 0.5);
-    }
-
     const container = document.getElementById('cards-container');
-    embaralhar(cardsData).forEach(data => {
+    const dropzonesContainer = document.getElementById('dropzones-container');
+
+    cardsData.sort(() => Math.random() - 0.5).forEach(data => {
       const div = document.createElement('div');
       div.className = 'card';
       div.draggable = true;
@@ -214,7 +195,13 @@
       container.appendChild(div);
     });
 
-    const dropzones = document.querySelectorAll('.dropzone');
+    cardsData.forEach(data => {
+      const zone = document.createElement('div');
+      zone.className = 'dropzone';
+      zone.dataset.ordem = data.dia;
+      zone.innerText = `Dia ${data.dia}`;
+      dropzonesContainer.appendChild(zone);
+    });
 
     function addCardListeners(card) {
       card.addEventListener('dragstart', e => {
@@ -227,11 +214,8 @@
 
     document.querySelectorAll('.card').forEach(addCardListeners);
 
-    dropzones.forEach(zone => {
-      zone.addEventListener('dragover', e => {
-        e.preventDefault();
-        zone.classList.add('over');
-      });
+    document.querySelectorAll('.dropzone').forEach(zone => {
+      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
       zone.addEventListener('dragleave', () => zone.classList.remove('over'));
       zone.addEventListener('drop', e => {
         e.preventDefault();
@@ -251,7 +235,7 @@
 
     function verificarOrdem() {
       let correto = true;
-      dropzones.forEach(zone => {
+      document.querySelectorAll('.dropzone').forEach(zone => {
         const card = zone.querySelector('.card');
         if (!card || card.dataset.dia !== zone.dataset.ordem) {
           correto = false;
@@ -263,7 +247,6 @@
       });
 
       const resultado = document.getElementById('resultado');
-
       if (correto) {
         resultado.textContent = 'Parabéns! Você organizou corretamente os dias da criação! ✅';
         resultado.classList.add('acertou');
@@ -274,7 +257,7 @@
       }
     }
 
-    // Suporte ao toque (mobile)
+    // TOUCH SUPPORT
     let tocando = false;
     let elementoTocado = null;
 
@@ -282,13 +265,17 @@
       const target = e.target.closest(".card");
       if (target) {
         e.preventDefault();
+        document.body.classList.add("touching");
         tocando = true;
         elementoTocado = target.cloneNode(true);
         elementoTocado.classList.add("touch-dragging");
-        elementoTocado.id = "dragging-temp";
+
+        const estilo = window.getComputedStyle(target);
+        elementoTocado.style.width = estilo.width;
+        elementoTocado.style.height = estilo.height;
         elementoTocado.dataset.dia = target.dataset.dia;
+
         document.body.appendChild(elementoTocado);
-        document.body.classList.add("touching");
       }
     });
 
@@ -298,17 +285,6 @@
         const touch = e.touches[0];
         elementoTocado.style.left = touch.pageX - 40 + "px";
         elementoTocado.style.top = touch.pageY - 40 + "px";
-
-        document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("over"));
-        const x = touch.clientX;
-        const y = touch.clientY;
-
-        for (let dz of document.querySelectorAll(".dropzone")) {
-          const rect = dz.getBoundingClientRect();
-          if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-            dz.classList.add("over");
-          }
-        }
       }
     });
 
@@ -318,7 +294,7 @@
         const x = touch.clientX;
         const y = touch.clientY;
 
-        for (let dz of document.querySelectorAll(".dropzone")) {
+        document.querySelectorAll(".dropzone").forEach(dz => {
           const rect = dz.getBoundingClientRect();
           if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
             const dia = elementoTocado.dataset.dia;
@@ -329,14 +305,14 @@
             dz.appendChild(dragged);
             addCardListeners(dragged);
             verificarOrdem();
-            break;
           }
-        }
+        });
 
         document.getElementById("dragging-temp")?.remove();
-        document.body.classList.remove("touching");
+        elementoTocado.remove();
         elementoTocado = null;
         tocando = false;
+        document.body.classList.remove("touching");
       }
     });
   </script>

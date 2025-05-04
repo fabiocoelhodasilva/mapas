@@ -95,24 +95,23 @@
       .mobile-flex {
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: center;
         align-items: flex-start;
         width: 100%;
-        gap: 6px;
         padding: 0 6px;
         box-sizing: border-box;
+        gap: 6%;
       }
 
       #dropzones-container, #cards-container {
         flex-direction: column;
         align-items: center;
-        width: 48%;
+        width: 47%;
         gap: 10px;
       }
 
       .card, .dropzone {
         width: 100%;
-        max-width: unset;
       }
 
       h1 {
@@ -227,6 +226,29 @@
         resultado.style.color = '#ff5555';
       }
     }
+
+    // ✅ Suporte para toque (touch) no celular
+    let touchCard = null;
+
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('touchstart', () => {
+        touchCard = card;
+      });
+    });
+
+    document.querySelectorAll('.dropzone').forEach(zone => {
+      zone.addEventListener('touchend', () => {
+        if (touchCard) {
+          const existing = zone.querySelector('.card');
+          if (existing) document.getElementById('cards-container').appendChild(existing);
+          zone.innerHTML = `Dia ${zone.dataset.ordem}`;
+          zone.appendChild(touchCard);
+          addCardListeners(touchCard);
+          touchCard = null;
+          verificarOrdem();
+        }
+      });
+    });
   </script>
 </body>
 </html>

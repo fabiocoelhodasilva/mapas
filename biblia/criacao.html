@@ -65,10 +65,10 @@
 
     .card img {
       width: 100%;
-      height: 100px;
+      height: 70%;
       object-fit: cover;
       border-radius: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     .dropzone.over {
@@ -119,16 +119,16 @@
       font-size: 14px;
       text-align: center;
       width: 160px;
-      min-height: 200px;
+      min-height: 100px;
       transform: translate(-50%, -50%);
     }
 
     .touch-dragging img {
       width: 100%;
-      height: 100px;
+      height: 50px;
       object-fit: cover;
       border-radius: 8px;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
     body.touching {
@@ -150,21 +150,18 @@
       }
 
       .card, .dropzone {
-        width: 100%;
-        min-height: 160px;
+        width: 90%;
+        min-height: 80px;
       }
 
-      .card img {
-        height: 80px;
+      .card img,
+      .touch-dragging img {
+        height: 40px;
       }
 
       .touch-dragging {
-        width: 100%;
-        min-height: 160px;
-      }
-
-      .touch-dragging img {
-        height: 80px;
+        width: 90%;
+        min-height: 80px;
       }
     }
   </style>
@@ -179,13 +176,13 @@
 
   <script>
     const cardsData = [
-      { dia: "1", texto: "Haja luz", img: "img/dia1.jpg" },
-      { dia: "2", texto: "Firmamento no meio das águas", img: "img/dia2.jpg" },
-      { dia: "3", texto: "Apareça a porção seca", img: "img/dia3.jpg" },
-      { dia: "4", texto: "Sol, lua e estrelas", img: "img/dia4.jpg" },
-      { dia: "5", texto: "Criou os peixes e as aves", img: "img/dia5.jpg" },
-      { dia: "6", texto: "Animais e o homem", img: "img/dia6.jpg" },
-      { dia: "7", texto: "Deus descansou", img: "img/dia7.jpg" }
+      { dia: "1", texto: "Haja luz", img: "../img/card_dia1.png" },
+      { dia: "2", texto: "Firmamento no meio das águas", img: "../img/card_dia2.png" },
+      { dia: "3", texto: "Apareça a porção seca", img: "../img/card_dia3.png" },
+      { dia: "4", texto: "Sol, lua e estrelas", img: "../img/card_dia4.png" },
+      { dia: "5", texto: "Criou os peixes e as aves", img: "../img/card_dia5.png" },
+      { dia: "6", texto: "Animais e o homem", img: "../img/card_dia6.png" },
+      { dia: "7", texto: "Deus descansou", img: "../img/card_dia7.png" }
     ];
 
     const container = document.getElementById('cards-container');
@@ -274,10 +271,8 @@
         tocando = true;
         elementoTocado = target.cloneNode(true);
         elementoTocado.classList.add("touch-dragging");
-
         elementoTocado.dataset.dia = target.dataset.dia;
         elementoTocado.id = "dragging-temp";
-
         document.body.appendChild(elementoTocado);
       }
     });

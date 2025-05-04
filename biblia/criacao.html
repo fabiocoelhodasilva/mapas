@@ -112,8 +112,9 @@
       color: white;
       font-size: 14px;
       text-align: center;
-      width: 160px;
-      min-height: 200px;
+      width: 160px !important;
+      min-height: 200px !important;
+      transform: translate(-50%, -50%);
     }
 
     .touch-dragging img {
@@ -152,8 +153,8 @@
       }
 
       .touch-dragging {
-        width: 100%;
-        min-height: 160px;
+        width: 100% !important;
+        min-height: 160px !important;
       }
 
       .touch-dragging img {
@@ -164,12 +165,10 @@
 </head>
 <body>
   <h1>Organize os Dias da Criação</h1>
-
   <div class="mobile-flex">
     <div id="dropzones-container"></div>
     <div id="cards-container"></div>
   </div>
-
   <div id="resultado"></div>
 
   <script>
@@ -274,6 +273,7 @@
         elementoTocado.style.width = estilo.width;
         elementoTocado.style.height = estilo.height;
         elementoTocado.dataset.dia = target.dataset.dia;
+        elementoTocado.id = "dragging-temp";
 
         document.body.appendChild(elementoTocado);
       }
@@ -283,8 +283,8 @@
       if (tocando && elementoTocado) {
         e.preventDefault();
         const touch = e.touches[0];
-        elementoTocado.style.left = touch.pageX - 40 + "px";
-        elementoTocado.style.top = touch.pageY - 40 + "px";
+        elementoTocado.style.left = touch.pageX + "px";
+        elementoTocado.style.top = touch.pageY + "px";
       }
     });
 

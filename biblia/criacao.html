@@ -12,7 +12,6 @@
       background-color: #1c1c1c;
       color: white;
       overflow-x: hidden;
-      overscroll-behavior: contain;
     }
 
     h1 {
@@ -21,25 +20,19 @@
       text-align: center;
     }
 
-    .mobile-flex {
+    #pares-container {
       display: flex;
-      gap: 10px;
-      justify-content: center;
-      width: 100%;
-      flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
     }
 
-    #cards-container {
-      touch-action: none;
-      user-select: none;
-    }
-
-    #cards-container, #dropzones-container {
+    .linha {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       gap: 10px;
-      margin: 15px 0;
+      flex-wrap: wrap;
     }
 
     .card, .dropzone {
@@ -65,7 +58,7 @@
 
     .card img {
       width: 100%;
-      height: 70%;
+      height: 60%;
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 6px;
@@ -119,13 +112,13 @@
       font-size: 14px;
       text-align: center;
       width: 160px;
-      min-height: 100px;
+      min-height: 200px;
       transform: translate(-50%, -50%);
     }
 
     .touch-dragging img {
       width: 100%;
-      height: 50px;
+      height: 60%;
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 6px;
@@ -135,51 +128,11 @@
       overflow: hidden;
       touch-action: none;
     }
-
-    @media screen and (max-width: 600px) {
-      .mobile-flex {
-        flex-direction: column;
-        gap: 20px;
-        padding: 10px 12px;
-      }
-
-      #dropzones-container,
-      #cards-container {
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        gap: 15px;
-      }
-
-    .card, .dropzone {
-       width: 95%;
-       min-height: 140px;
-    }
-
-    .card img,
-    .touch-dragging img {
-      height: 70px;
-    }
-
-    .touch-dragging {
-      width: 95%;
-      min-height: 140px;
-    }
-
-    h1 {
-     font-size: 20px;
-     padding: 10px;
-    }
-  }
-
   </style>
 </head>
 <body>
   <h1>Organize os Dias da Criação</h1>
-  <div class="mobile-flex">
-    <div id="dropzones-container"></div>
-    <div id="cards-container"></div>
-  </div>
+  <div id="pares-container"></div>
   <div id="resultado"></div>
 
   <script>
@@ -193,24 +146,27 @@
       { dia: "7", texto: "Deus descansou", img: "../img/card_dia7.png" }
     ];
 
-    const container = document.getElementById('cards-container');
-    const dropzonesContainer = document.getElementById('dropzones-container');
-
-    for (let i = 1; i <= 7; i++) {
-      const zone = document.createElement('div');
-      zone.className = 'dropzone';
-      zone.dataset.ordem = i.toString();
-      zone.innerText = `Dia ${i}`;
-      dropzonesContainer.appendChild(zone);
-    }
+    const paresContainer = document.getElementById('pares-container');
 
     cardsData.sort(() => Math.random() - 0.5).forEach(data => {
-      const div = document.createElement('div');
-      div.className = 'card';
-      div.draggable = true;
-      div.dataset.dia = data.dia;
-      div.innerHTML = `<img src="${data.img}" alt="Imagem do dia"><div>${data.texto}</div>`;
-      container.appendChild(div);
+      const linha = document.createElement('div');
+      linha.className = 'linha';
+
+      const dropzone = document.createElement('div');
+      dropzone.className = 'dropzone';
+      dropzone.dataset.ordem = data.dia;
+      dropzone.innerText = `Dia ${data.dia}`;
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.draggable = true;
+      card.dataset.dia = data.dia;
+      card.innerHTML = `<img src="${data.img}" alt="Imagem do dia"><div>${data.texto}</div>`;
+      addCardListeners(card);
+
+      linha.appendChild(dropzone);
+      linha.appendChild(card);
+      paresContainer.appendChild(linha);
     });
 
     function addCardListeners(card) {
@@ -222,31 +178,31 @@
       card.addEventListener('dragend', () => card.classList.remove('dragging'));
     }
 
-    document.querySelectorAll('.card').forEach(addCardListeners);
-
-    document.querySelectorAll('.dropzone').forEach(zone => {
-      zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
-      zone.addEventListener('dragleave', () => zone.classList.remove('over'));
-      zone.addEventListener('drop', e => {
-        e.preventDefault();
-        const dia = e.dataTransfer.getData('text/plain');
-        const dragged = document.querySelector(`.card[data-dia='${dia}']`);
-        if (dragged) {
-          const existing = zone.querySelector('.card');
-          if (existing) container.appendChild(existing);
-          zone.innerHTML = `Dia ${zone.dataset.ordem}`;
-          zone.appendChild(dragged);
-          addCardListeners(dragged);
-          verificarOrdem();
-        }
-        zone.classList.remove('over');
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.dropzone').forEach(zone => {
+        zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+        zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+        zone.addEventListener('drop', e => {
+          e.preventDefault();
+          const dia = e.dataTransfer.getData('text/plain');
+          const dragged = document.querySelector(`.card[data-dia='${dia}']`);
+          if (dragged) {
+            const existing = zone.parentElement.querySelector('.card');
+            if (existing) paresContainer.appendChild(existing.parentElement);
+            zone.innerHTML = `Dia ${zone.dataset.ordem}`;
+            zone.parentElement.appendChild(dragged);
+            addCardListeners(dragged);
+            verificarOrdem();
+          }
+          zone.classList.remove('over');
+        });
       });
     });
 
     function verificarOrdem() {
       let correto = true;
       document.querySelectorAll('.dropzone').forEach(zone => {
-        const card = zone.querySelector('.card');
+        const card = zone.parentElement.querySelector('.card');
         if (!card || card.dataset.dia !== zone.dataset.ordem) {
           correto = false;
           if (card) {
@@ -267,7 +223,7 @@
       }
     }
 
-    // TOUCH SUPPORT
+    // SUPORTE A TOQUE
     let tocando = false;
     let elementoTocado = null;
 
@@ -305,10 +261,10 @@
           if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
             const dia = elementoTocado.dataset.dia;
             const dragged = document.querySelector(`.card[data-dia='${dia}']`);
-            const existing = dz.querySelector('.card');
-            if (existing) container.appendChild(existing);
+            const existing = dz.parentElement.querySelector('.card');
+            if (existing) paresContainer.appendChild(existing.parentElement);
             dz.innerHTML = `Dia ${dz.dataset.ordem}`;
-            dz.appendChild(dragged);
+            dz.parentElement.appendChild(dragged);
             addCardListeners(dragged);
             verificarOrdem();
           }

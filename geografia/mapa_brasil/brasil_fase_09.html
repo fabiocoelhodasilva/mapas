@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Estados do Brasil - Fase 09</title>
   <style>
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
       background-color: #2E2E2E;
       font-family: Arial, sans-serif;
-      overflow-y: auto;
-      height: 100vh;
       color: white;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -34,13 +38,13 @@
     .subtitulo {
       text-align: center;
       font-size: 26px;
-      margin-top: 60px;
+      margin-top: 80px;
       color: #ddd;
     }
 
     .btn-verificar {
       display: block;
-      margin: 20px auto 10px auto;
+      margin: 10px auto;
       padding: 12px 28px;
       font-size: 18px;
       font-weight: bold;
@@ -62,18 +66,15 @@
       position: relative;
       background-color: #2E2E2E;
       padding: 0;
-      border-radius: 0;
       width: 100%;
       max-width: 1000px;
-      margin: 5px;
+      margin: 0 auto 20px auto;
     }
 
     .map-wrapper img {
       width: 100%;
       height: auto;
       display: block;
-      margin: 0;
-      padding: 0;
       object-fit: contain;
     }
 
@@ -258,3 +259,4 @@
   </script>
 </body>
 </html>
+

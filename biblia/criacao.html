@@ -46,6 +46,7 @@
       cursor: grab;
       background-color: #2e2e2e;
       border: 2px solid #1e90ff;
+      position: relative;
     }
 
     .card img {
@@ -112,6 +113,11 @@
 
       .card, .dropzone {
         width: 100%;
+        min-height: 160px; /* menor e mais alto no celular */
+      }
+
+      .card img {
+        height: 80px; /* imagem mais compacta */
       }
 
       h1 {
@@ -120,6 +126,12 @@
         width: 100%;
         text-align: center;
       }
+    }
+
+    .touch-dragging {
+      position: absolute;
+      z-index: 1000;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -227,27 +239,78 @@
       }
     }
 
-    // ✅ Suporte para toque (touch) no celular
-    let touchCard = null;
+    // ✅ Suporte completo para toque no celular
+    let tocando = false;
+    let elementoTocado = null;
 
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('touchstart', () => {
-        touchCard = card;
-      });
+    document.addEventListener("touchstart", e => {
+      const target = e.target.closest(".card");
+      if (target) {
+        e.preventDefault();
+        tocando = true;
+        elementoTocado = target.cloneNode(true);
+        elementoTocado.classList.add("touch-dragging");
+        elementoTocado.id = "dragging-temp";
+        elementoTocado.dataset.dia = target.dataset.dia;
+        document.body.appendChild(elementoTocado);
+      }
     });
 
-    document.querySelectorAll('.dropzone').forEach(zone => {
-      zone.addEventListener('touchend', () => {
-        if (touchCard) {
-          const existing = zone.querySelector('.card');
-          if (existing) document.getElementById('cards-container').appendChild(existing);
-          zone.innerHTML = `Dia ${zone.dataset.ordem}`;
-          zone.appendChild(touchCard);
-          addCardListeners(touchCard);
-          touchCard = null;
-          verificarOrdem();
+    document.addEventListener("touchmove", e => {
+      if (tocando && elementoTocado) {
+        const touch = e.touches[0];
+        elementoTocado.style.left = touch.pageX - 40 + "px";
+        elementoTocado.style.top = touch.pageY - 40 + "px";
+
+        document.querySelectorAll(".dropzone").forEach(dz => dz.classList.remove("over"));
+
+        const x = touch.clientX;
+        const y = touch.clientY;
+
+        for (let dz of document.querySelectorAll(".dropzone")) {
+          const rect = dz.getBoundingClientRect();
+          if (
+            x >= rect.left &&
+            x <= rect.right &&
+            y >= rect.top &&
+            y <= rect.bottom
+          ) {
+            dz.classList.add("over");
+          }
         }
-      });
+      }
+    });
+
+    document.addEventListener("touchend", e => {
+      if (tocando && elementoTocado) {
+        const touch = e.changedTouches[0];
+        const x = touch.clientX;
+        const y = touch.clientY;
+
+        for (let dz of document.querySelectorAll(".dropzone")) {
+          const rect = dz.getBoundingClientRect();
+          if (
+            x >= rect.left &&
+            x <= rect.right &&
+            y >= rect.top &&
+            y <= rect.bottom
+          ) {
+            const dia = elementoTocado.dataset.dia;
+            const dragged = document.querySelector(`.card[data-dia='${dia}']`);
+            const existing = dz.querySelector('.card');
+            if (existing) container.appendChild(existing);
+            dz.innerHTML = `Dia ${dz.dataset.ordem}`;
+            dz.appendChild(dragged);
+            addCardListeners(dragged);
+            verificarOrdem();
+            break;
+          }
+        }
+
+        document.getElementById("dragging-temp")?.remove();
+        elementoTocado = null;
+        tocando = false;
+      }
     });
   </script>
 </body>

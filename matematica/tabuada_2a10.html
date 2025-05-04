@@ -7,65 +7,16 @@
   <link rel="stylesheet" href="../css/stylemat.css" />
 </head>
 <body>
-  <h1>Jogo da Tabuada</h1>
+  <h1>Jogo da Tabuada (2 a 10)</h1>
 
-  <!-- Grupo da Tabuada do 2 -->
-  <div class="grupo-container" style="--cor: #FFB3BA">
-    <h2 class="enunciado">Tabuada do 2</h2>
-    <div class="linha-tab">
-      <div class="word" draggable="true" data-result="2" data-color="#FFB3BA">2</div>
-      <div class="word" draggable="true" data-result="4" data-color="#FFB3BA">4</div>
-      <div class="word" draggable="true" data-result="6" data-color="#FFB3BA">6</div>
-      <div class="word" draggable="true" data-result="8" data-color="#FFB3BA">8</div>
-      <div class="word" draggable="true" data-result="10" data-color="#FFB3BA">10</div>
-      <div class="word" draggable="true" data-result="12" data-color="#FFB3BA">12</div>
-      <div class="word" draggable="true" data-result="14" data-color="#FFB3BA">14</div>
-      <div class="word" draggable="true" data-result="16" data-color="#FFB3BA">16</div>
-      <div class="word" draggable="true" data-result="18" data-color="#FFB3BA">18</div>
-      <div class="word" draggable="true" data-result="20" data-color="#FFB3BA">20</div>
-    </div>
-    <div class="linha-tabula">
-      <div class="equacao">2 x 1 = <div class="dropzone" data-expected="2"></div></div>
-      <div class="equacao">2 x 2 = <div class="dropzone" data-expected="4"></div></div>
-      <div class="equacao">2 x 3 = <div class="dropzone" data-expected="6"></div></div>
-      <div class="equacao">2 x 4 = <div class="dropzone" data-expected="8"></div></div>
-      <div class="equacao">2 x 5 = <div class="dropzone" data-expected="10"></div></div>
-      <div class="equacao">2 x 6 = <div class="dropzone" data-expected="12"></div></div>
-      <div class="equacao">2 x 7 = <div class="dropzone" data-expected="14"></div></div>
-      <div class="equacao">2 x 8 = <div class="dropzone" data-expected="16"></div></div>
-      <div class="equacao">2 x 9 = <div class="dropzone" data-expected="18"></div></div>
-      <div class="equacao">2 x 10 = <div class="dropzone" data-expected="20"></div></div>
-    </div>
-  </div>
+  <!-- Tabuadas de 2 a 10 -->
+  <script>
+    const cores = [
+      "#FFB3BA", "#FFDFBA", "#FFFFBA", "#BAFFC9", "#BAE1FF", "#D7BAFF", "#FFC0CB", "#C0C0C0", "#B0E0E6"
+    ];
+  </script>
 
-  <!-- Grupo da Tabuada do 3 -->
-  <div class="grupo-container" style="--cor: #FFDFBA">
-    <h2 class="enunciado">Tabuada do 3</h2>
-    <div class="linha-tab">
-      <div class="word" draggable="true" data-result="3" data-color="#FFDFBA">3</div>
-      <div class="word" draggable="true" data-result="6" data-color="#FFDFBA">6</div>
-      <div class="word" draggable="true" data-result="9" data-color="#FFDFBA">9</div>
-      <div class="word" draggable="true" data-result="12" data-color="#FFDFBA">12</div>
-      <div class="word" draggable="true" data-result="15" data-color="#FFDFBA">15</div>
-      <div class="word" draggable="true" data-result="18" data-color="#FFDFBA">18</div>
-      <div class="word" draggable="true" data-result="21" data-color="#FFDFBA">21</div>
-      <div class="word" draggable="true" data-result="24" data-color="#FFDFBA">24</div>
-      <div class="word" draggable="true" data-result="27" data-color="#FFDFBA">27</div>
-      <div class="word" draggable="true" data-result="30" data-color="#FFDFBA">30</div>
-    </div>
-    <div class="linha-tabula">
-      <div class="equacao">3 x 1 = <div class="dropzone" data-expected="3"></div></div>
-      <div class="equacao">3 x 2 = <div class="dropzone" data-expected="6"></div></div>
-      <div class="equacao">3 x 3 = <div class="dropzone" data-expected="9"></div></div>
-      <div class="equacao">3 x 4 = <div class="dropzone" data-expected="12"></div></div>
-      <div class="equacao">3 x 5 = <div class="dropzone" data-expected="15"></div></div>
-      <div class="equacao">3 x 6 = <div class="dropzone" data-expected="18"></div></div>
-      <div class="equacao">3 x 7 = <div class="dropzone" data-expected="21"></div></div>
-      <div class="equacao">3 x 8 = <div class="dropzone" data-expected="24"></div></div>
-      <div class="equacao">3 x 9 = <div class="dropzone" data-expected="27"></div></div>
-      <div class="equacao">3 x 10 = <div class="dropzone" data-expected="30"></div></div>
-    </div>
-  </div>
+  <div id="tabuadas-container"></div>
 
   <!-- Mensagem de parabéns -->
   <div id="parabens-container" style="display:none">
@@ -74,7 +25,49 @@
     <button id="jogar-novamente" onclick="location.reload()">Jogar novamente</button>
   </div>
 
-  <!-- Script -->
+  <script>
+    const container = document.getElementById("tabuadas-container");
+
+    for (let num = 2; num <= 10; num++) {
+      const cor = cores[num - 2];
+      const grupo = document.createElement("div");
+      grupo.className = "grupo-container";
+      grupo.style.setProperty("--cor", cor);
+
+      const enunciado = document.createElement("h2");
+      enunciado.className = "enunciado";
+      enunciado.textContent = `Tabuada do ${num}`;
+
+      const linhaTab = document.createElement("div");
+      linhaTab.className = "linha-tab";
+      for (let i = 1; i <= 10; i++) {
+        const res = num * i;
+        const word = document.createElement("div");
+        word.className = "word";
+        word.draggable = true;
+        word.dataset.result = res;
+        word.dataset.color = cor;
+        word.textContent = res;
+        linhaTab.appendChild(word);
+      }
+
+      const linhaTabula = document.createElement("div");
+      linhaTabula.className = "linha-tabula";
+      for (let i = 1; i <= 10; i++) {
+        const res = num * i;
+        const equacao = document.createElement("div");
+        equacao.className = "equacao";
+        equacao.innerHTML = `${num} x ${i} = <div class="dropzone" data-expected="${res}"></div>`;
+        linhaTabula.appendChild(equacao);
+      }
+
+      grupo.appendChild(enunciado);
+      grupo.appendChild(linhaTab);
+      grupo.appendChild(linhaTabula);
+      container.appendChild(grupo);
+    }
+  </script>
+
   <script>
     function embaralharBlocos(grupoSelector) {
       document.querySelectorAll(grupoSelector).forEach(container => {
@@ -184,3 +177,4 @@
   </script>
 </body>
 </html>
+

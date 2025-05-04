@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Estados do Brasil - Fase 09</title>
+  <link rel="stylesheet" href="../../css/style.css" />
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: sans-serif;
+      margin: 0;
+    }
+
+    #header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #111;
+      color: white;
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      z-index: 1000;
+    }
+
+    .subtitulo {
+      text-align: center;
+      font-size: 26px;
+      margin-top: 100px;
+      color: #ddd;
+    }
+
+    .map-wrapper {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      margin-top: 5px;
+      background-color: #111;
+      padding: 10px 0;
+      border-radius: 10px;
+    }
+
+    .dropzone {
+      position: absolute;
+      width: 120px;
+      padding: 5px;
+      font-size: 14px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .btn-verificar {
+      display: block;
+      margin: 20px auto 10px auto;
+      padding: 12px 28px;
+      font-size: 18px;
+      font-weight: bold;
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-verificar:hover {
+      background-color: #104e8b;
+    }
+
+    #resultado-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px 40px;
+      border-radius: 16px;
+      text-align: center;
+      z-index: 2000;
+      display: none;
+      color: #000;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    #fechar-resultado {
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-size: 22px;
+      font-weight: bold;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #444;
+    }
+
+    #fechar-resultado:hover {
+      color: #ff3333;
+    }
+
+    #jogar-novamente-final {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #1e90ff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    #jogar-novamente-final:hover {
+      background-color: #104e8b;
+    }
+
+    /* Responsividade */
+    @media screen and (max-width: 480px) {
+      #header {
+        font-size: 20px;
+        padding: 12px 0;
+      }
+
+      .subtitulo {
+        font-size: 18px;
+        margin-top: 80px;
+        padding: 0 10px;
+      }
+
+      .btn-verificar {
+        font-size: 14px;
+        padding: 10px 20px;
+        margin-top: 10px;
+      }
+
+      #map-container {
+        transform: scale(0.94);
+        transform-origin: top center;
+        margin: 10px auto 30px auto;
+        width: 100%;
+      }
+
+      .dropzone {
+        width: 70px;
+        font-size: 10px;
+        padding: 2px;
+      }
+    }
+
+    @media screen and (min-width: 481px) and (max-width: 768px) {
+      .dropzone {
+        width: 85px;
+        font-size: 11px;
+      }
+
+      .btn-verificar {
+        font-size: 16px;
+        padding: 10px 24px;
+      }
+
+      #map-container {
+        width: 95%;
+        margin: 10px auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="header">Mapa do Brasil</div>
+
+  <div class="subtitulo">
+    Digite o nome dos estados nos campos posicionados no mapa.
+  </div>
+
+  <button onclick="verificarDigitado()" class="btn-verificar">Verificar Respostas</button>
+
+  <div class="map-wrapper" id="map-container">
+    <img src="../../img/mapa_brasil.png" alt="Mapa do Brasil" />
+  </div>
+
+  <div id="resultado-container">
+    <button id="fechar-resultado" onclick="fecharResultado()">&times;</button>
+    <div id="resultado-final"></div>
+    <button id="jogar-novamente-final" onclick="reiniciarDesafio()">Jogar novamente</button>
+  </div>
+
+  <script>
+    const estados = [
+      "Acre", "Alagoas", "Amapá", "Amazonas", "Bahia", "Ceará", "Distrito Federal", "Espírito Santo",
+      "Goiás", "Maranhão", "Mato Grosso", "Mato Grosso do Sul", "Minas Gerais", "Pará", "Paraíba", "Paraná",
+      "Pernambuco", "Piauí", "Rio de Janeiro", "Rio Grande do Norte", "Rio Grande do Sul", "Rondônia", "Roraima",
+      "Santa Catarina", "São Paulo", "Sergipe", "Tocantins"
+    ];
+
+    const posicoes = {
+      "Acre": { top: "39%", left: "5%" }, "Alagoas": { top: "40%", left: "93%" }, "Amapá": { top: "10%", left: "49%" },
+      "Amazonas": { top: "25%", left: "18%" }, "Bahia": { top: "45%", left: "72%" }, "Ceará": { top: "22%", left: "84%" },
+      "Distrito Federal": { top: "53.5%", left: "64.7%" }, "Espírito Santo": { top: "63%", left: "79%" },
+      "Goiás": { top: "57%", left: "53%" }, "Maranhão": { top: "28%", left: "65%" }, "Mato Grosso": { top: "48%", left: "40%" },
+      "Mato Grosso do Sul": { top: "65%", left: "42%" }, "Minas Gerais": { top: "61%", left: "66%" }, "Pará": { top: "25%", left: "47%" },
+      "Paraíba": { top: "32.7%", left: "95%" }, "Paraná": { top: "76.2%", left: "48.6%" }, "Pernambuco": { top: "36.1%", left: "83%" },
+      "Piauí": { top: "34%", left: "70%" }, "Rio de Janeiro": { top: "72%", left: "74%" }, "Rio Grande do Norte": { top: "28.5%", left: "87%" },
+      "Rio Grande do Sul": { top: "87%", left: "45%" }, "Rondônia": { top: "43.5%", left: "23.3%" }, "Roraima": { top: "7%", left: "25%" },
+      "Santa Catarina": { top: "82%", left: "62%" }, "São Paulo": { top: "69%", left: "54.5%" }, "Sergipe": { top: "45%", left: "88%" },
+      "Tocantins": { top: "42%", left: "57%" }
+    };
+
+    let sorteados = [];
+
+    function embaralhar(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function iniciarDesafioFinal() {
+      sorteados = embaralhar([...estados]).slice(0, 10);
+      document.querySelectorAll(".dropzone").forEach(el => el.remove());
+
+      const mapa = document.getElementById("map-container");
+
+      sorteados.forEach((estado, i) => {
+        const input = document.createElement("input");
+        input.className = "dropzone";
+        input.id = `input-${i + 1}`;
+        input.style.top = posicoes[estado].top;
+        input.style.left = posicoes[estado].left;
+        mapa.appendChild(input);
+      });
+    }
+
+    function normalizar(str) {
+      return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "");
+    }
+
+    function verificarDigitado() {
+      const resultados = [];
+      for (let i = 1; i <= 10; i++) {
+        const respUser = document.getElementById(`input-${i}`).value.trim();
+        const respCorreta = sorteados[i - 1];
+        resultados.push({ usuario: respUser, correta: respCorreta });
+      }
+
+      let tabela = `
+        <h3>Veja seu resultado:</h3>
+        <table style="border-collapse: collapse; margin: 10px auto;">
+          <thead>
+            <tr>
+              <th style="border: 1px solid #ccc; padding: 8px;">Sua Resposta</th>
+              <th style="border: 1px solid #ccc; padding: 8px;">Resposta Correta</th>
+            </tr>
+          </thead>
+          <tbody>`;
+
+      resultados.forEach(r => {
+        const correto = normalizar(r.usuario) === normalizar(r.correta);
+        tabela += `
+          <tr>
+            <td style="border: 1px solid #ccc; padding: 8px;">${r.usuario}</td>
+            <td style="border: 1px solid #ccc; padding: 8px;">${r.correta} ${correto ? "✅" : "❌"}</td>
+          </tr>`;
+      });
+
+      tabela += `</tbody></table>`;
+      document.getElementById("resultado-final").innerHTML = tabela;
+      document.getElementById("resultado-container").style.display = "block";
+    }
+
+    function fecharResultado() {
+      document.getElementById("resultado-container").style.display = "none";
+    }
+
+    function reiniciarDesafio() {
+      document.getElementById("resultado-container").style.display = "none";
+      iniciarDesafioFinal();
+    }
+
+    window.onload = iniciarDesafioFinal;
+  </script>
+</body>
+</html>

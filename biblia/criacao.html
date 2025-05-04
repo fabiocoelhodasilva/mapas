@@ -138,32 +138,40 @@
 
     @media screen and (max-width: 600px) {
       .mobile-flex {
-        flex-direction: row;
-        gap: 6%;
-        padding: 0 6px;
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px 12px;
       }
 
-      #dropzones-container, #cards-container {
+      #dropzones-container,
+      #cards-container {
         flex-direction: column;
         align-items: center;
-        width: 43%;
+        width: 100%;
+        gap: 15px;
       }
 
-      .card, .dropzone {
-        width: 90%;
-        min-height: 80px;
-      }
-
-      .card img,
-      .touch-dragging img {
-        height: 40px;
-      }
-
-      .touch-dragging {
-        width: 90%;
-        min-height: 80px;
-      }
+    .card, .dropzone {
+       width: 95%;
+       min-height: 140px;
     }
+
+    .card img,
+    .touch-dragging img {
+      height: 70px;
+    }
+
+    .touch-dragging {
+      width: 95%;
+      min-height: 140px;
+    }
+
+    h1 {
+     font-size: 20px;
+     padding: 10px;
+    }
+  }
+
   </style>
 </head>
 <body>

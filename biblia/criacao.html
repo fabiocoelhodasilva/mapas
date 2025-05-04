@@ -194,13 +194,13 @@
 
   <script>
     const cardsData = [
-      { dia: "1", texto: "Haja luz", img: "../img/card_dia1.png" },
-      { dia: "2", texto: "Firmamento no meio das águas", img: "../img/card_dia2.png" },
-      { dia: "3", texto: "Apareça a porção seca", img: "../img/card_dia3.png" },
-      { dia: "4", texto: "Sol, lua e estrelas", img: "../img/card_dia4.png" },
-      { dia: "5", texto: "Criou os peixes e as aves", img: "../img/card_dia5.png" },
-      { dia: "6", texto: "Animais e o homem", img: "../img/card_dia6.png" },
-      { dia: "7", texto: "Deus descansou", img: "../img/card_dia7.png" }
+      { dia: "1", texto: "Haja luz; e houve luz.", img: "../img/card_dia1.png" },
+      { dia: "2", texto: "Haja firmamento no meio das águas e separação entre águas e águas.", img: "../img/card_dia2.png" },
+      { dia: "3", texto: "Ajuntem-se as águas e apareça a terra, e a terra produziu relva e ervas que dão semente.", img: "../img/card_dia3.png" },
+      { dia: "4", texto: "Haja luzeiros no firmamento dos céus, sol, lua e estrelas", img: "../img/card_dia4.png" },
+      { dia: "5", texto: "Produzam as águas enxames de seres viventes, e voem as aves sobre a terra.", img: "../img/card_dia5.png" },
+      { dia: "6", texto: "Produza a terra animais e: -Façamos o homem à nossa imagem.", img: "../img/card_dia6.png" },
+      { dia: "7", texto: "E, havendo Deus terminado, neste dia descansou o santificou.", img: "../img/card_dia7.png" }
     ];
 
     const cardsArea = document.getElementById("cards-area");
@@ -260,7 +260,7 @@
           cardEl.remove();
 
           if (cardsArea.children.length === 0) {
-            const finalMsg = "Parabéns! Você completou todos os dias da criação! ✅";
+            const finalMsg = "Parabéns! Você acertou a ordem dos dias da criação! ✅";
             feedback.textContent = finalMsg;
             feedbackBottom.textContent = finalMsg;
             feedback.className = "feedback acerto";

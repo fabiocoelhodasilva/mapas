@@ -29,6 +29,10 @@
       flex-wrap: wrap;
     }
 
+    #cards-container {
+      touch-action: none;
+    }
+
     #cards-container, #dropzones-container {
       display: flex;
       flex-wrap: wrap;
@@ -185,6 +189,16 @@
     const container = document.getElementById('cards-container');
     const dropzonesContainer = document.getElementById('dropzones-container');
 
+    // Cria os dropzones em ordem
+    for (let i = 1; i <= 7; i++) {
+      const zone = document.createElement('div');
+      zone.className = 'dropzone';
+      zone.dataset.ordem = i.toString();
+      zone.innerText = `Dia ${i}`;
+      dropzonesContainer.appendChild(zone);
+    }
+
+    // Embaralha os cards
     cardsData.sort(() => Math.random() - 0.5).forEach(data => {
       const div = document.createElement('div');
       div.className = 'card';
@@ -192,14 +206,6 @@
       div.dataset.dia = data.dia;
       div.innerHTML = `<img src="${data.img}" alt="Imagem do dia"><div>${data.texto}</div>`;
       container.appendChild(div);
-    });
-
-    cardsData.forEach(data => {
-      const zone = document.createElement('div');
-      zone.className = 'dropzone';
-      zone.dataset.ordem = data.dia;
-      zone.innerText = `Dia ${data.dia}`;
-      dropzonesContainer.appendChild(zone);
     });
 
     function addCardListeners(card) {
